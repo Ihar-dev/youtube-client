@@ -1,3 +1,9 @@
+type thumbnailType = {
+  url: string,
+  width: number,
+  height: number,
+}
+
 interface SearchItem {
   kind: string;
   etag: string;
@@ -8,31 +14,11 @@ interface SearchItem {
     title: string,
     description: string,
     thumbnails: {
-      default: {
-        url: string,
-        width: number,
-        height: number,
-      },
-      medium: {
-        url: string,
-        width: number,
-        height: number,
-      },
-      high: {
-        url: string,
-        width: number,
-        height: number,
-      },
-      standard: {
-        url: string,
-        width: number,
-        height: number,
-      },
-      maxres: {
-        url: string,
-        width: number,
-        height: number,
-      },
+      default: thumbnailType,
+      medium: thumbnailType,
+      high: thumbnailType,
+      standard: thumbnailType,
+      maxres: thumbnailType,
     },
     channelTitle: string,
     tags: string [],
