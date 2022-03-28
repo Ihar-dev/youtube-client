@@ -44,7 +44,8 @@
       ],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
-        "airbnb-base"
+        "airbnb-base",
+        "airbnb-typescript/base"
       ],
       "rules": {}
     }
