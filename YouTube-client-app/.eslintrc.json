@@ -3,8 +3,7 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
-  "overrides": [
-    {
+  "overrides": [{
       "files": [
         "*.ts"
       ],
@@ -16,7 +15,9 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "airbnb-base",
+        "airbnb-typescript/base"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -35,7 +36,10 @@
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/no-empty-lifecycle-method": "off"
+        "@angular-eslint/no-empty-lifecycle-method": "off",
+        "import/prefer-default-export": "off",
+        "class-methods-use-this": "off",
+        "no-console": "off"
       }
     },
     {
@@ -43,9 +47,7 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "airbnb-base",
-        "airbnb-typescript/base"
+        "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
     }

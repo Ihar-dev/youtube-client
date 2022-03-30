@@ -8,9 +8,9 @@ describe('SortingBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SortingBarComponent ]
+      declarations: [SortingBarComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
