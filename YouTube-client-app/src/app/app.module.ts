@@ -14,13 +14,13 @@ import { SortingBarComponent } from './components/header/sorting-bar/sorting-bar
     SearchResultsComponent,
     SearchItemComponent,
     HeaderComponent,
-    SortingBarComponent
+    SortingBarComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

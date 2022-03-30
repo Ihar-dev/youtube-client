@@ -1,8 +1,8 @@
-type thumbnailType = {
+type ThumbNailType = {
   url: string,
   width: number,
   height: number,
-}
+};
 
 interface SearchItem {
   kind: string;
@@ -14,11 +14,11 @@ interface SearchItem {
     title: string,
     description: string,
     thumbnails: {
-      default: thumbnailType,
-      medium: thumbnailType,
-      high: thumbnailType,
-      standard: thumbnailType,
-      maxres: thumbnailType,
+      default: ThumbNailType,
+      medium: ThumbNailType,
+      high: ThumbNailType,
+      standard: ThumbNailType,
+      maxres: ThumbNailType,
     },
     channelTitle: string,
     tags: string [],
@@ -40,5 +40,5 @@ interface SearchItem {
 }
 
 export {
-  SearchItem
+  SearchItem,
 };

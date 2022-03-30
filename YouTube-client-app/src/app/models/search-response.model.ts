@@ -1,5 +1,5 @@
 import {
-  SearchItem
+  SearchItem,
 } from './search-item.model';
 
 interface SearchResponse {
@@ -13,5 +13,5 @@ interface SearchResponse {
 }
 
 export {
-  SearchResponse
+  SearchResponse,
 };
