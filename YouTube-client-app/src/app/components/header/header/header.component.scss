@@ -1,43 +1,22 @@
-%center-block-position {
-  position: relative;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-%normal-text {
-  font-family: 'Roboto', sans-serif;
-  font-size: 12px;
-  line-height: 14px;
-  font-weight: 400;
-}
-
-@mixin background-block-image($url, $per, $rad) {
-  background-image: url($url);
-  background-size: $per;
-  border-radius: $rad;
-  background-repeat: no-repeat;
-  background-position: center;
-}
+@import "../../../../styles.scss";
 
 .header__container {
+  position: relative;
   width: 100%;
   height: 80px;
   background-color: #E5E5E5;
 
   .header__search-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     width: 570px;
     height: 50px;
+    @extend %flex-normal-pattern;
     @extend %center-block-position;
   }
 
   .header__logo {
     @include background-block-image("../../../../assets/svg/logo.svg", 80%, 5px);
-    width: 1 / 0.8 * 50px;
-    height: 1 / 0.8 * 50px;
+    width: (1 / 0.8) * 50px;
+    height: (1 / 0.8) * 50px;
   }
 
   input {
@@ -50,19 +29,39 @@
 
   .header__search-button {
     @include background-block-image("../../../../assets/svg/search_button.svg", 80%, 5px);
-    width: 1 / 0.8 * 80px;
-    height: 1 / 0.8 * 24px;
+    width: (1 / 0.8) * 80px;
+    height: (1 / 0.8) * 24px;
   }
 
   .header__search-settings-button {
     @include background-block-image("../../../../assets/svg/search_settings.svg", 80%, 5px);
-    width: 1 / 0.8 * 24px;
-    height: 1 / 0.8 * 24px;
+    width: (1 / 0.8) * 24px;
+    height: (1 / 0.8) * 24px;
   }
 
   .header__search-button,
   .header__search-settings-button {
     background-color: #E5E5E5;
+  }
+
+  .header__user-container {
+    position: absolute;
+    left: calc(50% + 600px);
+    top: 50%;
+    transform: translateY(-50%);
+    @extend %flex-normal-pattern;
+
+    p {
+      @extend %normal-text;
+    }
+
+    .header__user-logo {
+      @include background-block-image("../../../../assets/svg/login.svg", 80%, 3px);
+      width: (1 / 0.8) * 34px;
+      height: (1 / 0.8) * 35px;
+      background-color: #E5E5E5;
+      //border: solid 1px yellowgreen;
+    }
   }
 
 }

@@ -1,1 +1,29 @@
 @import "null-style.scss";
+
+%center-block-position {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+%normal-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+%flex-normal-pattern {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin background-block-image($url, $per, $rad) {
+  background-image: url($url);
+  background-size: $per;
+  border-radius: $rad;
+  background-repeat: no-repeat;
+  background-position: center;
+}
