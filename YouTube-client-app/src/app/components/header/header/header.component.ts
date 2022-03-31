@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  EventEmitter,
+  Output,
+  Component,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +11,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Output() headerToggleEvent = new EventEmitter < boolean >();
+
+  public SortingBarView: boolean;
+
   constructor() {
-    console.log('');
+    this.SortingBarView = false;
   }
 
-  ngOnInit(): void {
+  public toggleSortingBar(): void {
+    this.SortingBarView = !this.SortingBarView;
+    console.log(this.SortingBarView);
+    this.headerToggleEvent.emit(this.SortingBarView);
   }
+
+  ngOnInit(): void {}
 }

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-search-item',
@@ -10,6 +13,5 @@ export class SearchItemComponent implements OnInit {
     console.log('');
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

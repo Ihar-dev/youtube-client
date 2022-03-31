@@ -1,10 +1,12 @@
 @import "../../../../styles.scss";
 
+$block-main-color: #E5E5E5;
+
 .header__container {
   position: relative;
   width: 100%;
   height: 80px;
-  background-color: #E5E5E5;
+  background-color: $block-main-color;
 
   .header__search-container {
     width: 570px;
@@ -15,8 +17,8 @@
 
   .header__logo {
     @include background-block-image("../../../../assets/svg/logo.svg", 80%, 5px);
-    width: (1 / 0.8) * 50px;
-    height: (1 / 0.8) * 50px;
+    width: calc(50px / 0.8);
+    height: calc(50px / 0.8);
   }
 
   input {
@@ -29,19 +31,19 @@
 
   .header__search-button {
     @include background-block-image("../../../../assets/svg/search_button.svg", 80%, 5px);
-    width: (1 / 0.8) * 80px;
-    height: (1 / 0.8) * 24px;
+    width: calc(80px / 0.8);
+    height: calc(24px / 0.8);
   }
 
   .header__search-settings-button {
     @include background-block-image("../../../../assets/svg/search_settings.svg", 80%, 5px);
-    width: (1 / 0.8) * 24px;
-    height: (1 / 0.8) * 24px;
+    width: calc(24px / 0.8);
+    height: calc(24px / 0.8);
   }
 
   .header__search-button,
   .header__search-settings-button {
-    background-color: #E5E5E5;
+    background-color: $block-main-color;
   }
 
   .header__user-container {
@@ -57,9 +59,9 @@
 
     .header__user-logo {
       @include background-block-image("../../../../assets/svg/login.svg", 80%, 3px);
-      width: (1 / 0.8) * 34px;
-      height: (1 / 0.8) * 35px;
-      background-color: #E5E5E5;
+      width: calc(34px / 0.8);
+      height: calc(35px / 0.8);
+      background-color: $block-main-color;
       //border: solid 1px yellowgreen;
     }
   }

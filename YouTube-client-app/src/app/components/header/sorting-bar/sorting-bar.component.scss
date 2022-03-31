@@ -1,0 +1,34 @@
+@import "../../../../styles.scss";
+
+$block-main-color: #E5E5E5;
+
+.header__sorting-bar-container {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  background-color: $block-main-color;
+
+  .header__sorting-inner-container {
+    width: 479px;
+    height: 14px;
+    @extend %flex-normal-pattern;
+    @extend %center-block-position;
+
+    p {
+      @extend %normal-text;
+      color: #2F80ED;
+    }
+
+    .header__sorting-naming {
+      color: #929292;
+    }
+
+    input {
+      width: 149px;
+      height: 13px;
+      border: none;
+      background-color: white;
+      @extend %normal-text;
+    }
+  }
+}
