@@ -1,4 +1,5 @@
 import {
+  Input,
   Component,
   OnInit,
 } from '@angular/core';
@@ -9,6 +10,8 @@ import {
   styleUrls: ['./sorting-bar.component.scss'],
 })
 export class SortingBarComponent implements OnInit {
+  @Input() public SortingBarView: boolean;
+
   constructor() {
     console.log('');
   }

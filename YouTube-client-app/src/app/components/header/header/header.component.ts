@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
 
   public toggleSortingBar(): void {
     this.SortingBarView = !this.SortingBarView;
-    console.log(this.SortingBarView);
     this.headerToggleEvent.emit(this.SortingBarView);
   }
 

@@ -1,5 +1,4 @@
 import {
-  Input,
   Component,
 } from '@angular/core';
 
@@ -9,12 +8,15 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  @Input() public SortingBarView: boolean;
+  public title: string;
+  public SortingBarView: boolean;
 
-  title = 'YouTube-client-app';
+  constructor() {
+    this.title = 'YouTube-client-app';
+    this.SortingBarView = false;
+  }
 
-  toggle(SortingBarView: boolean) {
-    const message = `event ${SortingBarView}`;
-    console.log(message);
+  toggleSortingBar(SortingBarView: boolean) {
+    this.SortingBarView = SortingBarView;
   }
 }

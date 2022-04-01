@@ -1,4 +1,3 @@
-<app-header (headerToggleEvent)="toggle($event)"></app-header>
-<app-sorting-bar></app-sorting-bar>
+<app-header (headerToggleEvent)="toggleSortingBar($event)"></app-header>
+<app-sorting-bar [SortingBarView]="SortingBarView"></app-sorting-bar>
 <router-outlet></router-outlet>
-<!-- (headerToggleEvent)="toggle()" -->
