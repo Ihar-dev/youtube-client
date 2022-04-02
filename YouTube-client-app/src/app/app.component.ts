@@ -10,13 +10,19 @@ import {
 export class AppComponent {
   public title: string;
   public SortingBarView: boolean;
+  public dataForSearch: string;
 
   constructor() {
     this.title = 'YouTube-client-app';
     this.SortingBarView = false;
+    this.dataForSearch = '';
   }
 
-  toggleSortingBar(SortingBarView: boolean) {
+  public toggleSortingBar(SortingBarView: boolean): void {
     this.SortingBarView = SortingBarView;
+  }
+
+  public makeSearch(dataForSearch: string): void {
+    this.dataForSearch = dataForSearch;
   }
 }

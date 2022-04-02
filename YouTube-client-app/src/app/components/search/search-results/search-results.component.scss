@@ -1,0 +1,27 @@
+@import "../../../../styles.scss";
+
+.search__search-container {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  border: solid 1px yellowgreen;
+  transform: translateY(-80px);
+  z-index: 100;
+  transition: transform 0.5s;
+
+  &.active {
+    height: 160px;
+  }
+
+  &.sorting-bar-display {
+    transform: translateY(0);
+  }
+
+  .search__inner-search-container {
+    width: 1200px;
+    height: 40px;
+    @extend %flex-normal-pattern;
+    @extend %center-block-position;
+    background-color: aqua;
+  }
+}

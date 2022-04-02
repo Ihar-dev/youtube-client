@@ -20,7 +20,7 @@
   justify-content: space-between;
 }
 
-@mixin background-block-image($url, $per, $rad) {
+@mixin background-image-block($url, $per, $rad) {
   background-image: url($url);
   background-size: $per;
   border-radius: $rad;

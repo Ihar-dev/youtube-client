@@ -5,6 +5,8 @@ import {
   OnInit,
 } from '@angular/core';
 
+// import { SearchResponse } from '../../../models/search-response.model';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,6 +14,7 @@ import {
 })
 export class HeaderComponent implements OnInit {
   @Output() headerToggleEvent = new EventEmitter < boolean >();
+  @Output() outDataForSearchEvent = new EventEmitter < string >();
 
   public SortingBarView: boolean;
 
@@ -22,6 +25,10 @@ export class HeaderComponent implements OnInit {
   public toggleSortingBar(): void {
     this.SortingBarView = !this.SortingBarView;
     this.headerToggleEvent.emit(this.SortingBarView);
+  }
+
+  public makeSearch(dataForSearch: string): void {
+    this.outDataForSearchEvent.emit(dataForSearch);
   }
 
   ngOnInit(): void {}

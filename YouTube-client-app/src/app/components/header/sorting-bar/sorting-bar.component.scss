@@ -8,10 +8,11 @@ $block-main-color: #E5E5E5;
   height: 80px;
   background-color: $block-main-color;
   z-index: 50;
+  transform: translateY(-80px);
   transition: transform 0.5s;
 
   &.active {
-    transform: translateY(-80px);
+    transform: translateY(0);
   }
 
   .header__sorting-inner-container {

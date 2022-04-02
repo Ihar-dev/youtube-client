@@ -12,9 +12,5 @@ import {
 export class SortingBarComponent implements OnInit {
   @Input() public SortingBarView: boolean;
 
-  constructor() {
-    console.log('');
-  }
-
   ngOnInit(): void {}
 }
