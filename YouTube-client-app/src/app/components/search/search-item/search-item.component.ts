@@ -1,7 +1,10 @@
 import {
+  Input,
   Component,
   OnInit,
 } from '@angular/core';
+
+import { SearchItem } from '../../../models/search-item.model';
 
 @Component({
   selector: 'app-search-item',
@@ -9,9 +12,7 @@ import {
   styleUrls: ['./search-item.component.scss'],
 })
 export class SearchItemComponent implements OnInit {
-  constructor() {
-    console.log('');
-  }
+  @Input() item: SearchItem;
 
   ngOnInit(): void {}
 }

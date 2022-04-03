@@ -5,6 +5,10 @@ import {
 } from '@angular/core';
 
 import {
+  SearchItem,
+} from '../../../models/search-item.model';
+
+import {
   SearchResponse,
 } from '../../../models/search-response.model';
 
@@ -17,12 +21,19 @@ export class SearchResultsComponent implements OnChanges {
   @Input() public dataForSearch: string;
   @Input() public SortingBarView: boolean;
 
+  public items: SearchItem[];
+
+  constructor() {
+    this.items = [];
+  }
+
   private async handleSearch(): Promise < void > {
     let searchData: SearchResponse;
     searchData = this.getDefaultSearchData();
     searchData = await this.getSearchResults();
+    this.items = searchData.items;
     console.log(this.dataForSearch);
-    console.log(searchData);
+    console.log(this.items);
   }
 
   private async getSearchResults(): Promise < SearchResponse > {
