@@ -12,12 +12,14 @@ export class AppComponent {
   public SortingBarView: boolean;
   public dataForSearch: string;
   public viewsSortingOrder: string;
+  public publishedAtSortingOrder: string;
 
   constructor() {
     this.title = 'YouTube-client-app';
     this.SortingBarView = false;
     this.dataForSearch = '';
     this.viewsSortingOrder = '';
+    this.publishedAtSortingOrder = '';
   }
 
   public toggleSortingBar(SortingBarView: boolean): void {
@@ -30,5 +32,9 @@ export class AppComponent {
 
   public makeSortingByViews(viewsSortingOrder: string): void {
     this.viewsSortingOrder = viewsSortingOrder;
+  }
+
+  public makeSortingByPublishedAt(publishedAtSortingOrder: string): void {
+    this.publishedAtSortingOrder = publishedAtSortingOrder;
   }
 }

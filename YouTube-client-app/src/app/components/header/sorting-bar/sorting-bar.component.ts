@@ -13,17 +13,26 @@ import {
 export class SortingBarComponent {
   @Input() public SortingBarView: boolean;
   @Output() outSortingByViewsEvent = new EventEmitter < string >();
+  @Output() outSortingByPublishedAtEvent = new EventEmitter < string >();
 
   public viewsSortingOrder: string;
+  public publishedAtSortingOrder: string;
 
   constructor() {
     this.viewsSortingOrder = 'increasing';
+    this.publishedAtSortingOrder = 'increasing';
   }
 
   public makeSortingByViewsCount(): void {
     (this.viewsSortingOrder === 'increasing') ? this.viewsSortingOrder = 'decreasing' : this.viewsSortingOrder = 'increasing';
     this.outSortingByViewsEvent.emit(this.viewsSortingOrder);
     this.decorateText('sorting by views count');
+  }
+
+  public makeSortingByPublishedAt(): void {
+    (this.publishedAtSortingOrder === 'increasing') ? this.publishedAtSortingOrder = 'decreasing' : this.publishedAtSortingOrder = 'increasing';
+    this.outSortingByPublishedAtEvent.emit(this.publishedAtSortingOrder);
+    this.decorateText('sorting by published at');
   }
 
   private decorateText(text: string): void {
@@ -35,10 +44,13 @@ export class SortingBarComponent {
           sortingButtons[1].style.textDecoration = 'underline';
           sortingButtons[2].style.textDecoration = 'none';
           break;
-        default:
-          sortingButtons[0].style.textDecoration = 'none';
+        case 'sorting by published at':
+          sortingButtons[0].style.textDecoration = 'underline';
           sortingButtons[1].style.textDecoration = 'none';
           sortingButtons[2].style.textDecoration = 'none';
+          break;
+        default:
+          sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
       }
     }
   }

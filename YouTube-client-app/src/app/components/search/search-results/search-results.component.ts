@@ -22,6 +22,7 @@ export class SearchResultsComponent implements OnChanges {
   @Input() public dataForSearch: string;
   @Input() public SortingBarView: boolean;
   @Input() public viewsSortingOrder: string;
+  @Input() public publishedAtSortingOrder: string;
 
   public items: SearchItem[];
 
@@ -71,6 +72,23 @@ export class SearchResultsComponent implements OnChanges {
     }
   }
 
+  private handlePublishedAtSortingOrderChange(): void {
+    if (this.publishedAtSortingOrder === 'increasing') {
+      this.items.sort((a, b) => {
+        if (new Date(a.snippet.publishedAt) > new Date(b.snippet.publishedAt)) return -1;
+        if (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt)) return 1;
+        return 0;
+      });
+    }
+    if (this.publishedAtSortingOrder === 'decreasing') {
+      this.items.sort((a, b) => {
+        if (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt)) return -1;
+        if (new Date(a.snippet.publishedAt) > new Date(b.snippet.publishedAt)) return 1;
+        return 0;
+      });
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     const dataForSearchChange = changes['dataForSearch'];
     if (dataForSearchChange && dataForSearchChange.currentValue !== dataForSearchChange.previousValue) {/* eslint-disable-line */
@@ -78,5 +96,7 @@ export class SearchResultsComponent implements OnChanges {
     }
     const viewsSortingOrderChange = changes['viewsSortingOrder'];
     if (viewsSortingOrderChange && this.viewsSortingOrder) this.handleViewsSortingOrderChange();
+    const publishedAtSortingOrderChange = changes['publishedAtSortingOrder'];
+    if (publishedAtSortingOrderChange && this.publishedAtSortingOrder) this.handlePublishedAtSortingOrderChange();/* eslint-disable-line */
   }
 }
