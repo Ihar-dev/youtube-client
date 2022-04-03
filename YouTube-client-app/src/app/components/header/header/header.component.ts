@@ -2,7 +2,6 @@ import {
   EventEmitter,
   Output,
   Component,
-  OnInit,
 } from '@angular/core';
 
 // import { SearchResponse } from '../../../models/search-response.model';
@@ -12,7 +11,7 @@ import {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   @Output() headerToggleEvent = new EventEmitter < boolean >();
   @Output() outDataForSearchEvent = new EventEmitter < string >();
 
@@ -30,6 +29,4 @@ export class HeaderComponent implements OnInit {
   public makeSearch(dataForSearch: string): void {
     this.outDataForSearchEvent.emit(dataForSearch);
   }
-
-  ngOnInit(): void {}
 }

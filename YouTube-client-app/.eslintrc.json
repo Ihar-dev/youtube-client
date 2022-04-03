@@ -42,7 +42,8 @@
         "no-console": "off",
         "linebreak-style": "off",
         "@typescript-eslint/lines-between-class-members": ["off"],
-        "arrow-parens": "off"
+        "arrow-parens": "off",
+        "@typescript-eslint/no-unused-expressions": ["off"]
       }
     },
     {

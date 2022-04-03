@@ -1,5 +1,5 @@
-<app-header (headerToggleEvent)="toggleSortingBar($event)" (outDataForSearchEvent)="makeSearch($event)">
-</app-header>
-<app-sorting-bar [SortingBarView]="SortingBarView"></app-sorting-bar>
-<app-search-results [dataForSearch]="dataForSearch" [SortingBarView]="SortingBarView"></app-search-results>
+<app-header (headerToggleEvent)="toggleSortingBar($event)" (outDataForSearchEvent)="makeSearch($event)"></app-header>
+<app-sorting-bar [SortingBarView]="SortingBarView" (outSortingByViewsEvent)="makeSortingByViews($event)"></app-sorting-bar>
+<app-search-results [dataForSearch]="dataForSearch" [SortingBarView]="SortingBarView" [viewsSortingOrder]="viewsSortingOrder">
+</app-search-results>
 <router-outlet></router-outlet>

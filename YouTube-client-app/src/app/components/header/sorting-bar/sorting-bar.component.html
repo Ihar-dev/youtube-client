@@ -1,10 +1,9 @@
 <div class="header__sorting-bar-container" [class.active]="SortingBarView">
   <div class="header__sorting-inner-container">
     <p class="header__sorting-naming">Sorting by:</p>
-    <p>date</p>
-    <p>count of views</p>
-    <p>by word or sentence</p>
+    <p class="header__sorting-button">date</p>
+    <p class="header__sorting-button" (click)="makeSortingByViewsCount()">count of views</p>
+    <p class="header__sorting-button">by word or sentence</p>
     <input id="header__sorting-input" type="text">
   </div>
 </div>
-<!-- *ngIf="" -->

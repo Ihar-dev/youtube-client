@@ -2,6 +2,7 @@ import {
   Input,
   Component,
   OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 
 import {
@@ -20,6 +21,7 @@ import {
 export class SearchResultsComponent implements OnChanges {
   @Input() public dataForSearch: string;
   @Input() public SortingBarView: boolean;
+  @Input() public viewsSortingOrder: string;
 
   public items: SearchItem[];
 
@@ -34,6 +36,8 @@ export class SearchResultsComponent implements OnChanges {
     this.items = searchData.items;
     console.log(this.dataForSearch);
     console.log(this.items);
+    const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
+    if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
   }
 
   private async getSearchResults(): Promise < SearchResponse > {
@@ -58,7 +62,21 @@ export class SearchResultsComponent implements OnChanges {
     return data;
   }
 
-  ngOnChanges(): void {
-    if (this.dataForSearch) this.handleSearch();
+  private handleViewsSortingOrderChange(): void {
+    if (this.viewsSortingOrder === 'increasing') {
+      this.items.sort((a, b) => Number(a.statistics.viewCount) - Number(b.statistics.viewCount));
+    }
+    if (this.viewsSortingOrder === 'decreasing') {
+      this.items.sort((a, b) => Number(b.statistics.viewCount) - Number(a.statistics.viewCount));
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const dataForSearchChange = changes['dataForSearch'];
+    if (dataForSearchChange && dataForSearchChange.currentValue !== dataForSearchChange.previousValue) {/* eslint-disable-line */
+      if (this.dataForSearch) this.handleSearch();
+    }
+    const viewsSortingOrderChange = changes['viewsSortingOrder'];
+    if (viewsSortingOrderChange && this.viewsSortingOrder) this.handleViewsSortingOrderChange();
   }
 }
