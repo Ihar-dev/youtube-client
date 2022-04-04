@@ -98,6 +98,13 @@ export class SearchResultsComponent implements OnChanges {
   private filterBySentence(): void {
     const re = new RegExp(this.filterSentence, 'i');
     this.items = this.tempItems.filter(el => el.snippet.title.match(re));
+    const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
+    if (window.getComputedStyle(sortingButtons[0]).textDecoration.slice(0, 9) === 'underline') {
+      this.handlePublishedAtSortingOrderChange();
+    }
+    if (window.getComputedStyle(sortingButtons[1]).textDecoration.slice(0, 9) === 'underline') {
+      this.handleViewsSortingOrderChange();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
