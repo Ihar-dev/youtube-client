@@ -13,6 +13,7 @@ export class AppComponent {
   public dataForSearch: string;
   public viewsSortingOrder: string;
   public publishedAtSortingOrder: string;
+  public filterSentence: string;
 
   constructor() {
     this.title = 'YouTube-client-app';
@@ -20,6 +21,11 @@ export class AppComponent {
     this.dataForSearch = '';
     this.viewsSortingOrder = '';
     this.publishedAtSortingOrder = '';
+    this.filterSentence = '';
+  }
+
+  public makeFilterBySentence(filterSentence: string): void {
+    this.filterSentence = filterSentence;
   }
 
   public toggleSortingBar(SortingBarView: boolean): void {

@@ -23,11 +23,14 @@ export class SearchResultsComponent implements OnChanges {
   @Input() public SortingBarView: boolean;
   @Input() public viewsSortingOrder: string;
   @Input() public publishedAtSortingOrder: string;
+  @Input() public filterSentence: string;
 
   public items: SearchItem[];
+  public tempItems: SearchItem[];
 
   constructor() {
     this.items = [];
+    this.tempItems = [];
   }
 
   private async handleSearch(): Promise < void > {
@@ -35,8 +38,7 @@ export class SearchResultsComponent implements OnChanges {
     searchData = this.getDefaultSearchData();
     searchData = await this.getSearchResults();
     this.items = searchData.items;
-    console.log(this.dataForSearch);
-    console.log(this.items);
+    this.tempItems = this.items;
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
     if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
   }
@@ -66,9 +68,11 @@ export class SearchResultsComponent implements OnChanges {
   private handleViewsSortingOrderChange(): void {
     if (this.viewsSortingOrder === 'increasing') {
       this.items.sort((a, b) => Number(a.statistics.viewCount) - Number(b.statistics.viewCount));
+      if (!this.filterSentence) this.tempItems = this.items;
     }
     if (this.viewsSortingOrder === 'decreasing') {
       this.items.sort((a, b) => Number(b.statistics.viewCount) - Number(a.statistics.viewCount));
+      if (!this.filterSentence) this.tempItems = this.items;
     }
   }
 
@@ -79,6 +83,7 @@ export class SearchResultsComponent implements OnChanges {
         if (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt)) return 1;
         return 0;
       });
+      if (!this.filterSentence) this.tempItems = this.items;
     }
     if (this.publishedAtSortingOrder === 'decreasing') {
       this.items.sort((a, b) => {
@@ -86,7 +91,13 @@ export class SearchResultsComponent implements OnChanges {
         if (new Date(a.snippet.publishedAt) > new Date(b.snippet.publishedAt)) return 1;
         return 0;
       });
+      if (!this.filterSentence) this.tempItems = this.items;
     }
+  }
+
+  private filterBySentence(): void {
+    const re = new RegExp(this.filterSentence, 'i');
+    this.items = this.tempItems.filter(el => el.snippet.title.match(re));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -98,5 +109,7 @@ export class SearchResultsComponent implements OnChanges {
     if (viewsSortingOrderChange && this.viewsSortingOrder) this.handleViewsSortingOrderChange();
     const publishedAtSortingOrderChange = changes['publishedAtSortingOrder'];
     if (publishedAtSortingOrderChange && this.publishedAtSortingOrder) this.handlePublishedAtSortingOrderChange();/* eslint-disable-line */
+    const filterSentenceChange = changes['filterSentence'];
+    if (filterSentenceChange && !filterSentenceChange.firstChange) this.filterBySentence();/* eslint-disable-line */
   }
 }

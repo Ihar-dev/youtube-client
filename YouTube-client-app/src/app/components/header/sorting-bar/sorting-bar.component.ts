@@ -14,13 +14,20 @@ export class SortingBarComponent {
   @Input() public SortingBarView: boolean;
   @Output() outSortingByViewsEvent = new EventEmitter < string >();
   @Output() outSortingByPublishedAtEvent = new EventEmitter < string >();
+  @Output() outFilterSentenceEvent = new EventEmitter < string >();
 
   public viewsSortingOrder: string;
   public publishedAtSortingOrder: string;
+  public filterSentence: string;
 
   constructor() {
     this.viewsSortingOrder = 'increasing';
     this.publishedAtSortingOrder = 'increasing';
+    this.filterSentence = '';
+  }
+
+  public makeSentenceFilter() {
+    this.outFilterSentenceEvent.emit(this.filterSentence);
   }
 
   public makeSortingByViewsCount(): void {
@@ -42,12 +49,10 @@ export class SortingBarComponent {
         case 'sorting by views count':
           sortingButtons[0].style.textDecoration = 'none';
           sortingButtons[1].style.textDecoration = 'underline';
-          sortingButtons[2].style.textDecoration = 'none';
           break;
         case 'sorting by published at':
           sortingButtons[0].style.textDecoration = 'underline';
           sortingButtons[1].style.textDecoration = 'none';
-          sortingButtons[2].style.textDecoration = 'none';
           break;
         default:
           sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */

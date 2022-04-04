@@ -3,7 +3,7 @@
     <p class="header__sorting-naming">Sorting by:</p>
     <p class="header__sorting-button" (click)="makeSortingByPublishedAt()">date</p>
     <p class="header__sorting-button" (click)="makeSortingByViewsCount()">count of views</p>
-    <p class="header__sorting-button">by word or sentence</p>
-    <input id="header__sorting-input" type="text">
+    <p class="header__filter-naming" [class.underline-text]="filterSentence">by word or sentence</p>
+    <input type="text" [(ngModel)]="filterSentence" (input)="makeSentenceFilter()">
   </div>
 </div>
