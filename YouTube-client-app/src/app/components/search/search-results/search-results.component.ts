@@ -26,7 +26,7 @@ export class SearchResultsComponent implements OnChanges {
   @Input() public filterSentence: string;
 
   public items: SearchItem[];
-  public tempItems: SearchItem[];
+  private tempItems: SearchItem[];
 
   constructor() {
     this.items = [];
