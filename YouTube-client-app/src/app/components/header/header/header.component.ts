@@ -4,8 +4,6 @@ import {
   Component,
 } from '@angular/core';
 
-// import { SearchResponse } from '../../../models/search-response.model';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

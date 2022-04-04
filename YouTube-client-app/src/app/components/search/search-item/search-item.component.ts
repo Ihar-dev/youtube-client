@@ -16,7 +16,7 @@ enum Settings {
   styleUrls: ['./search-item.component.scss'],
 })
 export class SearchItemComponent {
-  @Input() item: SearchItem;
+  @Input() public item: SearchItem;
 
   public getBorderColor(): string {
     const dateNow = new Date();
