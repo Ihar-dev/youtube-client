@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchResultsComponent } from './components/search/search-results/search-results.component';
@@ -21,6 +22,7 @@ import { SortingBarComponent } from './components/header/sorting-bar/sorting-bar
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
