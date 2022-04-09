@@ -1,4 +1,4 @@
-@import "../../../../styles.scss";
+@import "../../../../../styles.scss";
 
 @mixin statistics-image($w) {
   width: $w;
@@ -38,22 +38,22 @@
 
       .search__statistics-viewCount-image {
         @include statistics-image(20px);
-        @include background-image-block("../../../../assets/svg/viewed.svg", 100%, 0);
+        @include background-image-block("../../../../../assets/svg/viewed.svg", 100%, 0);
       }
 
       .search__statistics-likeCount-image {
         @include statistics-image(15px);
-        @include background-image-block("../../../../assets/svg/liked.svg", 100%, 0);
+        @include background-image-block("../../../../../assets/svg/liked.svg", 100%, 0);
       }
 
       .search__statistics-dislikeCount-image {
         @include statistics-image(15px);
-        @include background-image-block("../../../../assets/svg/dislike.svg", 100%, 0);
+        @include background-image-block("../../../../../assets/svg/dislike.svg", 100%, 0);
       }
 
       .search__statistics-commentCount-image {
         @include statistics-image(13px);
-        @include background-image-block("../../../../assets/svg/commented.svg", 100%, 0);
+        @include background-image-block("../../../../../assets/svg/commented.svg", 100%, 0);
       }
     }
   }
@@ -71,7 +71,7 @@
   }
 
   .search__item-more-button {
-    @include background-image-block("../../../../assets/svg/more-button.svg", 80%, 5px);
+    @include background-image-block("../../../../../assets/svg/more-button.svg", 80%, 5px);
     width: calc(120px / 0.8);
     height: calc(32px / 0.8);
     background-color: #E5E5E5;
