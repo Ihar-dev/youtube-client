@@ -33,6 +33,13 @@
   justify-content: center;
 }
 
+%flex-column-pattern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
 @mixin background-image-block($url, $per, $rad) {
   background-image: url($url);
   background-size: $per;
