@@ -1,4 +1,17 @@
 <div class="login-container">
   <p>Login</p>
-  <mat-slider min="1" max="100" step="1" value="50"></mat-slider>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>login</mat-label>
+      <mat-hint>Min 4 characters</mat-hint>
+      <input type="text" matInput required>
+    </mat-form-field>
+  </form>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>password</mat-label>
+      <input type="password" matInput required>
+    </mat-form-field>
+  </form>
+  <button class="login-container__login-button"></button>
 </div>
