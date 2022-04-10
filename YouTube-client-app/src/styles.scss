@@ -27,6 +27,12 @@
   justify-content: space-between;
 }
 
+%flex-center-pattern {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @mixin background-image-block($url, $per, $rad) {
   background-image: url($url);
   background-size: $per;

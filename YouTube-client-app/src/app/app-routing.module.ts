@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { SearchResultsComponent } from './youtube/components/search/search-results/search-results.component';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
+import { SortingBarComponent } from './core/components/sorting-bar/sorting-bar.component';
+import { HeaderComponent } from './core/components/header/header.component';
 
 const routes: Routes = [
-  { path: 'dist/you-tube-client-app', component: SearchResultsComponent },
-  /* { path: 'about', component: AboutComponent},
-  { path: '**', component: NotFoundComponent } */
+  { path: '', component: SortingBarComponent },
+  { path: 'log', component: HeaderComponent, pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
