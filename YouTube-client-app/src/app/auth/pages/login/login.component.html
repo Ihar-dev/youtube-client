@@ -4,14 +4,14 @@
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>login</mat-label>
       <mat-hint>Min 4 characters</mat-hint>
-      <input type="text" matInput required>
+      <input type="text" matInput required #nameInput>
     </mat-form-field>
   </form>
   <form class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>password</mat-label>
-      <input type="password" matInput required>
+      <input type="password" matInput required #passwordInput>
     </mat-form-field>
   </form>
-  <button class="login-container__login-button"></button>
+  <button class="login-container__login-button" (click)="loginService.setUser(nameInput.value, passwordInput.value)"></button>
 </div>

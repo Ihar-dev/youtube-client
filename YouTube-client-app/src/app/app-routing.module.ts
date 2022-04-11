@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthModule } from './auth/auth.module';
+
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
-// import { SortingBarComponent } from './core/components/sorting-bar/sorting-bar.component';
-import { HeaderComponent } from './core/components/header/header.component';
-import { LoginComponent } from './auth/components/login/login.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'log', component: HeaderComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    AuthModule,
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

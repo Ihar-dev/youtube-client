@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { YoutubeAppAuthorization } from '../models/youtube-app-authorization.model';
 
 enum AuthSettings {
-  tokenLength = 10,
+  tokenLength = 25,
   tokenPossibleSymbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
 }
 
@@ -31,6 +31,8 @@ export class LoginService {
       text += AuthSettings.tokenPossibleSymbols.charAt(Math.floor(Math.random() * AuthSettings.tokenPossibleSymbols.length));/* eslint-disable-line */
     }
     this.authorization.token = text;
+    console.log(userName);
+    console.log(password);
     localStorage.setItem('youtube-app-authorization', JSON.stringify(this.authorization));
   }
 
@@ -41,7 +43,7 @@ export class LoginService {
 
   private getDefault(): YoutubeAppAuthorization {
     return {
-      userName: '123',
+      userName: '',
       token: '',
       password: '',
     };
