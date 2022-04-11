@@ -1,8 +1,4 @@
-import {
-  EventEmitter,
-  Output,
-  Component,
-} from '@angular/core';
+import { Component } from '@angular/core';
 
 import { LoginService } from '../../../auth/services/login.service';
 import { HeaderBarService } from '../../services/header-bar.service';
@@ -15,8 +11,6 @@ import { HeaderBarModel } from '../../models/header-bar.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Output() outDataForSearchEvent = new EventEmitter < string >();
-
   public loginService: LoginService;
   public headerBarConditions: HeaderBarModel;
 
@@ -30,6 +24,7 @@ export class HeaderComponent {
   }
 
   public makeSearch(dataForSearch: string): void {
-    this.outDataForSearchEvent.emit(dataForSearch);
+    if (!this.loginService.getUserName()) return;
+    console.log(dataForSearch);
   }
 }

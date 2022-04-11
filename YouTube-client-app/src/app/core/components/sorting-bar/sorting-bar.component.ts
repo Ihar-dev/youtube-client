@@ -1,7 +1,4 @@
 import {
-  EventEmitter,
-  Output,
-  Input,
   Component,
 } from '@angular/core';
 
@@ -15,11 +12,6 @@ import { HeaderBarModel } from '../../models/header-bar.model';
   styleUrls: ['./sorting-bar.component.scss'],
 })
 export class SortingBarComponent {
-  @Input() public SortingBarView: boolean;
-  @Output() outSortingByViewsEvent = new EventEmitter < string >();
-  @Output() outSortingByPublishedAtEvent = new EventEmitter < string >();
-  @Output() outFilterSentenceEvent = new EventEmitter < string >();
-
   public viewsSortingOrder: string;
   public publishedAtSortingOrder: string;
   public filterSentence: string;
@@ -33,18 +25,16 @@ export class SortingBarComponent {
   }
 
   public makeSentenceFilter() {
-    this.outFilterSentenceEvent.emit(this.filterSentence);
+
   }
 
   public makeSortingByViewsCount(): void {
     (this.viewsSortingOrder === 'increasing') ? this.viewsSortingOrder = 'decreasing' : this.viewsSortingOrder = 'increasing';/* eslint-disable-line */
-    this.outSortingByViewsEvent.emit(this.viewsSortingOrder);
     this.decorateText('sorting by views count');
   }
 
   public makeSortingByPublishedAt(): void {
     (this.publishedAtSortingOrder === 'increasing') ? this.publishedAtSortingOrder = 'decreasing' : this.publishedAtSortingOrder = 'increasing';/* eslint-disable-line */
-    this.outSortingByPublishedAtEvent.emit(this.publishedAtSortingOrder);
     this.decorateText('sorting by published at');
   }
 
