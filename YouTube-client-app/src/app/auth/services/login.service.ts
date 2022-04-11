@@ -25,12 +25,13 @@ export class LoginService {
     return this.authorization.userName;
   }
 
-  public setUser(userName: string, password: string): void {
+  public setUser(userName: string, password: string, isUserNameInvalid: boolean, isUserPasswordInvalid: boolean): void {
+    if (isUserNameInvalid || isUserPasswordInvalid) return;
     this.authorization.userName = userName;
     this.authorization.password = password;
     let text = '';
     for (let i = 0; i < AuthSettings.tokenLength; i++) {
-      text += AuthSettings.tokenPossibleSymbols.charAt(Math.floor(Math.random() * AuthSettings.tokenPossibleSymbols.length));/* eslint-disable-line */
+      text += AuthSettings.tokenPossibleSymbols.charAt(Math.floor(Math.random() * AuthSettings.tokenPossibleSymbols.length));
     }
     this.authorization.token = text;
     localStorage.setItem('youtube-app-authorization', JSON.stringify(this.authorization));

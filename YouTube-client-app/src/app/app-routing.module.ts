@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthModule } from './auth/auth.module';
+import { YoutubeModule } from './youtube/youtube.module';
 
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     AuthModule,
+    YoutubeModule,
   ],
   exports: [RouterModule],
 })

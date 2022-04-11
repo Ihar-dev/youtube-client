@@ -1,18 +1,25 @@
 <div class="login-container">
   <p>Login</p>
-  <form class="example-form">
+  <form class="example-form" [formGroup]="myForm">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>login</mat-label>
       <mat-hint>Min 4 characters</mat-hint>
-      <input type="text" matInput required #nameInput>
+      <input type="text" matInput required #nameInput name="name" formControlName="userName">
     </mat-form-field>
+    <div *ngIf="myForm.controls['userName'].invalid && myForm.controls['userName'].touched">
+      invalid name
+    </div>
   </form>
-  <form class="example-form">
+  <form class="example-form" [formGroup]="myForm">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>password</mat-label>
-      <input type="password" matInput required #passwordInput>
+      <mat-hint>Min 6 characters</mat-hint>
+      <input type="password" matInput required #passwordInput name="password" formControlName="userPassword">
     </mat-form-field>
+    <div *ngIf="myForm.controls['userPassword'].invalid && myForm.controls['userPassword'].touched">
+      invalid password
+    </div>
   </form>
-  <button class="login-container__login-button"
-  (click)="loginService.setUser(nameInput.value, passwordInput.value)" title="log in"></button>
+  <button class="login-container__login-button" (click)="loginService.setUser(nameInput.value, passwordInput.value,
+  myForm.controls['userName'].invalid, myForm.controls['userPassword'].invalid)" title="log in"></button>
 </div>
