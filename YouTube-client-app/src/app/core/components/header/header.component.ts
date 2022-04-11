@@ -4,6 +4,8 @@ import {
   Component,
 } from '@angular/core';
 
+import { LoginService } from '../../../auth/services/login.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,8 +16,10 @@ export class HeaderComponent {
   @Output() outDataForSearchEvent = new EventEmitter < string >();
 
   public SortingBarView: boolean;
+  loginService: LoginService;
 
-  constructor() {
+  constructor(loginService: LoginService) {
+    this.loginService = loginService;
     this.SortingBarView = false;
   }
 

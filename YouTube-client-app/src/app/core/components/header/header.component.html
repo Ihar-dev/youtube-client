@@ -6,8 +6,8 @@
     <button class="header__search-settings-button" (click)="toggleSortingBar()" title="settings"></button>
   </div>
   <div class="header__user-container">
-    <p>Your Name</p>
-    <button class="header__user-logo" routerLink="/log"></button>
+    <p>{{ loginService.getUserName() }}</p>
+    <button class="header__user-logo" (click)="loginService.resetUser()" title="log out"></button>
   </div>
 </div>
 

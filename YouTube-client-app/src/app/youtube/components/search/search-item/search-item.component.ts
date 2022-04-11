@@ -1,21 +1,23 @@
 import {
-  Input,
+  // Input,
   Component,
 } from '@angular/core';
 
-import {
+/* import {
   SearchItem,
-} from '../../../models/search-item.model';
+} from '../../../models/search-item.model'; */
 
-enum Settings {
+/* enum Settings {
   sevenDaysDuration = 1000 * 60 * 60 * 24 * 7,
-}
+} */
 @Component({
   selector: 'app-search-item',
   templateUrl: './search-item.component.html',
   styleUrls: ['./search-item.component.scss'],
 })
-export class SearchItemComponent {
+
+export class SearchItemComponent {}
+/* export class SearchItemComponent {
   @Input() public item: SearchItem;
 
   public getBorderColor(): string {
@@ -34,4 +36,4 @@ export class SearchItemComponent {
     }
     return 'red';
   }
-}
+} */

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { YoutubeAppAuthorization } from '../models/youtube-app-authorization.model';
+import { Router } from '@angular/router';
+
+import { AppAuthorizationModel } from '../models/youtube-app-authorization.model';
 
 enum AuthSettings {
   tokenLength = 25,
@@ -11,9 +13,9 @@ enum AuthSettings {
 })
 
 export class LoginService {
-  private authorization: YoutubeAppAuthorization;
+  private authorization: AppAuthorizationModel;
 
-  constructor() {
+  constructor(private router: Router) {
     if (localStorage.getItem('youtube-app-authorization')) {
       this.authorization = JSON.parse(localStorage.getItem('youtube-app-authorization') || '');
     } else this.authorization = this.getDefault();
@@ -31,17 +33,17 @@ export class LoginService {
       text += AuthSettings.tokenPossibleSymbols.charAt(Math.floor(Math.random() * AuthSettings.tokenPossibleSymbols.length));/* eslint-disable-line */
     }
     this.authorization.token = text;
-    console.log(userName);
-    console.log(password);
     localStorage.setItem('youtube-app-authorization', JSON.stringify(this.authorization));
+    this.router.navigate(['/main']);
   }
 
   public resetUser(): void {
     this.authorization = this.getDefault();
     localStorage.setItem('youtube-app-authorization', '');
+    this.router.navigate(['/login']);
   }
 
-  private getDefault(): YoutubeAppAuthorization {
+  private getDefault(): AppAuthorizationModel {
     return {
       userName: '',
       token: '',

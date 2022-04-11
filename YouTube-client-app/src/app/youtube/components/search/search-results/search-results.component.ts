@@ -1,24 +1,23 @@
 import {
-  Input,
   Component,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 
-import {
+/* import {
   SearchItem,
-} from '../../../models/search-item.model';
+} from '../../../models/search-item.model'; */
 
-import {
+/* import {
   SearchResponse,
-} from '../../../models/search-response.model';
+} from '../../../models/search-response.model'; */
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
 })
-export class SearchResultsComponent implements OnChanges {
+
+export class SearchResultsComponent {}
+/* export class SearchResultsComponent implements OnChanges {
   @Input() public dataForSearch: string;
   @Input() public SortingBarView: boolean;
   @Input() public viewsSortingOrder: string;
@@ -40,7 +39,7 @@ export class SearchResultsComponent implements OnChanges {
     this.items = searchData.items;
     this.tempItems = this.items;
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
-    if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
+    if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');
   }
 
   private async getSearchResults(): Promise < SearchResponse > {
@@ -109,14 +108,16 @@ export class SearchResultsComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const dataForSearchChange = changes['dataForSearch'];
-    if (dataForSearchChange && dataForSearchChange.currentValue !== dataForSearchChange.previousValue) {/* eslint-disable-line */
+    if (dataForSearchChange && dataForSearchChange.currentValue !== dataForSearchChange.previousValue) {
       if (this.dataForSearch) this.handleSearch();
     }
     const viewsSortingOrderChange = changes['viewsSortingOrder'];
     if (viewsSortingOrderChange && this.viewsSortingOrder) this.handleViewsSortingOrderChange();
     const publishedAtSortingOrderChange = changes['publishedAtSortingOrder'];
-    if (publishedAtSortingOrderChange && this.publishedAtSortingOrder) this.handlePublishedAtSortingOrderChange();/* eslint-disable-line */
+    if (publishedAtSortingOrderChange && this.publishedAtSortingOrder) this.handlePublishedAtSortingOrderChange();
     const filterSentenceChange = changes['filterSentence'];
-    if (filterSentenceChange && !filterSentenceChange.firstChange) this.filterBySentence();/* eslint-disable-line */
+    if (filterSentenceChange && !filterSentenceChange.firstChange) this.filterBySentence();
   }
-}
+} */
+
+/* eslint-disable-line */

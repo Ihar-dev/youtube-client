@@ -13,5 +13,6 @@
       <input type="password" matInput required #passwordInput>
     </mat-form-field>
   </form>
-  <button class="login-container__login-button" (click)="loginService.setUser(nameInput.value, passwordInput.value)"></button>
+  <button class="login-container__login-button"
+  (click)="loginService.setUser(nameInput.value, passwordInput.value)" title="log in"></button>
 </div>
