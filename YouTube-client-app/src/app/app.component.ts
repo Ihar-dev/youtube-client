@@ -9,7 +9,6 @@ import {
 })
 export class AppComponent {
   public title: string;
-  public SortingBarView: boolean;
   public dataForSearch: string;
   public viewsSortingOrder: string;
   public publishedAtSortingOrder: string;
@@ -17,7 +16,6 @@ export class AppComponent {
 
   constructor() {
     this.title = 'YouTube-client-app';
-    this.SortingBarView = false;
     this.dataForSearch = '';
     this.viewsSortingOrder = '';
     this.publishedAtSortingOrder = '';
@@ -26,10 +24,6 @@ export class AppComponent {
 
   public makeFilterBySentence(filterSentence: string): void {
     this.filterSentence = filterSentence;
-  }
-
-  public toggleSortingBar(SortingBarView: boolean): void {
-    this.SortingBarView = SortingBarView;
   }
 
   public makeSearch(dataForSearch: string): void {

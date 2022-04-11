@@ -5,6 +5,9 @@ import {
 } from '@angular/core';
 
 import { LoginService } from '../../../auth/services/login.service';
+import { HeaderBarService } from '../../services/header-bar.service';
+
+import { HeaderBarModel } from '../../models/header-bar.model';
 
 @Component({
   selector: 'app-header',
@@ -12,20 +15,18 @@ import { LoginService } from '../../../auth/services/login.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Output() headerToggleEvent = new EventEmitter < boolean >();
   @Output() outDataForSearchEvent = new EventEmitter < string >();
 
-  public SortingBarView: boolean;
-  loginService: LoginService;
+  public loginService: LoginService;
+  public headerBarConditions: HeaderBarModel;
 
-  constructor(loginService: LoginService) {
+  constructor(loginService: LoginService, headerBarService: HeaderBarService) {
     this.loginService = loginService;
-    this.SortingBarView = false;
+    this.headerBarConditions = headerBarService.headerBarConditions;
   }
 
   public toggleSortingBar(): void {
-    this.SortingBarView = !this.SortingBarView;
-    this.headerToggleEvent.emit(this.SortingBarView);
+    this.headerBarConditions.SortingBarView = !this.headerBarConditions.SortingBarView;
   }
 
   public makeSearch(dataForSearch: string): void {

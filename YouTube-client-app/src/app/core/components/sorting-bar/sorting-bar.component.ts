@@ -5,6 +5,10 @@ import {
   Component,
 } from '@angular/core';
 
+import { HeaderBarService } from '../../services/header-bar.service';
+
+import { HeaderBarModel } from '../../models/header-bar.model';
+
 @Component({
   selector: 'app-sorting-bar',
   templateUrl: './sorting-bar.component.html',
@@ -19,11 +23,13 @@ export class SortingBarComponent {
   public viewsSortingOrder: string;
   public publishedAtSortingOrder: string;
   public filterSentence: string;
+  public headerBarConditions: HeaderBarModel;
 
-  constructor() {
+  constructor(headerBarService: HeaderBarService) {
     this.viewsSortingOrder = 'increasing';
     this.publishedAtSortingOrder = 'increasing';
     this.filterSentence = '';
+    this.headerBarConditions = headerBarService.headerBarConditions;
   }
 
   public makeSentenceFilter() {
@@ -31,13 +37,13 @@ export class SortingBarComponent {
   }
 
   public makeSortingByViewsCount(): void {
-    (this.viewsSortingOrder === 'increasing') ? this.viewsSortingOrder = 'decreasing' : this.viewsSortingOrder = 'increasing';
+    (this.viewsSortingOrder === 'increasing') ? this.viewsSortingOrder = 'decreasing' : this.viewsSortingOrder = 'increasing';/* eslint-disable-line */
     this.outSortingByViewsEvent.emit(this.viewsSortingOrder);
     this.decorateText('sorting by views count');
   }
 
   public makeSortingByPublishedAt(): void {
-    (this.publishedAtSortingOrder === 'increasing') ? this.publishedAtSortingOrder = 'decreasing' : this.publishedAtSortingOrder = 'increasing';
+    (this.publishedAtSortingOrder === 'increasing') ? this.publishedAtSortingOrder = 'decreasing' : this.publishedAtSortingOrder = 'increasing';/* eslint-disable-line */
     this.outSortingByPublishedAtEvent.emit(this.publishedAtSortingOrder);
     this.decorateText('sorting by published at');
   }
