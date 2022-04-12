@@ -9,16 +9,30 @@ import { HeaderBarModel } from '../models/header-bar.model';
 
 export class HeaderBarService {
   public headerBarConditions: HeaderBarModel;
-  public dataForSearch$: Subject < string >;
+  public dataForSearch$ = new Subject < string >();
+  public viewsSortingOrder$ = new Subject < string >();
+  public publishedAtSortingOrder$ = new Subject < string >();
+  public filterSentence$ = new Subject < string >();
 
   constructor() {
     this.headerBarConditions = {
       SortingBarView: false,
     };
-    this.dataForSearch$ = new Subject < string >();
   }
 
   public changeDataForSearch(dataForSearch: string) {
     this.dataForSearch$.next(dataForSearch);
+  }
+
+  public changeViewsSortingOrder(viewsSortingOrder: string) {
+    this.viewsSortingOrder$.next(viewsSortingOrder);
+  }
+
+  public changePublishedAtSortingOrder(publishedAtSortingOrder: string) {
+    this.publishedAtSortingOrder$.next(publishedAtSortingOrder);
+  }
+
+  public changeFilterSentence(filterSentence: string) {
+    this.filterSentence$.next(filterSentence);
   }
 }

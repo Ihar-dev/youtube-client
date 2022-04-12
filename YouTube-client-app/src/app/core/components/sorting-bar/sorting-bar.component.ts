@@ -12,12 +12,14 @@ import { HeaderBarModel } from '../../models/header-bar.model';
   styleUrls: ['./sorting-bar.component.scss'],
 })
 export class SortingBarComponent {
+  private readonly headerBarService: HeaderBarService;
   public viewsSortingOrder: string;
   public publishedAtSortingOrder: string;
   public filterSentence: string;
   public headerBarConditions: HeaderBarModel;
 
   constructor(headerBarService: HeaderBarService) {
+    this.headerBarService = headerBarService;
     this.viewsSortingOrder = 'increasing';
     this.publishedAtSortingOrder = 'increasing';
     this.filterSentence = '';
@@ -25,17 +27,19 @@ export class SortingBarComponent {
   }
 
   public makeSentenceFilter() {
-
+    this.headerBarService.changeFilterSentence(this.filterSentence);
   }
 
   public makeSortingByViewsCount(): void {
     (this.viewsSortingOrder === 'increasing') ? this.viewsSortingOrder = 'decreasing' : this.viewsSortingOrder = 'increasing';/* eslint-disable-line */
     this.decorateText('sorting by views count');
+    this.headerBarService.changeViewsSortingOrder(this.viewsSortingOrder);
   }
 
   public makeSortingByPublishedAt(): void {
     (this.publishedAtSortingOrder === 'increasing') ? this.publishedAtSortingOrder = 'decreasing' : this.publishedAtSortingOrder = 'increasing';/* eslint-disable-line */
     this.decorateText('sorting by published at');
+    this.headerBarService.changePublishedAtSortingOrder(this.publishedAtSortingOrder);
   }
 
   private decorateText(text: string): void {

@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { HeaderBarService } from '../../../../core/services/header-bar.service';
@@ -12,9 +14,16 @@ import { HeaderBarModel } from '../../../../core/models/header-bar.model';
   styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
+  private viewsSortingOrder: string;
+  private publishedAtSortingOrder: string;
+  private filterSentence: string;
+
   private readonly headerBarService: HeaderBarService;
   public headerBarConditions: HeaderBarModel;
   private dataForSearchSubs: Subscription;
+  private viewsSortingOrderSubs: Subscription;
+  private publishedAtSortingOrderSubs: Subscription;
+  private filterSentenceSubs: Subscription;
   public items: SearchItem[];
   private tempItems: SearchItem[];
 
@@ -30,10 +39,28 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       console.log(dataForSearch);
       this.handleSearch();
     });
+
+    this.viewsSortingOrderSubs = this.headerBarService.viewsSortingOrder$.subscribe((viewsSortingOrder) => {
+      this.viewsSortingOrder = viewsSortingOrder;
+      this.handleViewsSortingOrderChange();
+    });
+
+    this.publishedAtSortingOrderSubs = this.headerBarService.publishedAtSortingOrder$.subscribe((publishedAtSortingOrder) => {
+      this.publishedAtSortingOrder = publishedAtSortingOrder;
+      this.handlePublishedAtSortingOrderChange();
+    });
+
+    this.filterSentenceSubs = this.headerBarService.filterSentence$.subscribe((filterSentence) => {
+      this.filterSentence = filterSentence;
+      this.filterBySentence();
+    });
   }
 
   ngOnDestroy(): void {
     this.dataForSearchSubs.unsubscribe();
+    this.viewsSortingOrderSubs.unsubscribe();
+    this.publishedAtSortingOrderSubs.unsubscribe();
+    this.filterSentenceSubs.unsubscribe();
   }
 
   private async handleSearch(): Promise < void > {
@@ -42,7 +69,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     searchData = await this.getSearchResults();
     this.items = searchData.items;
     this.tempItems = this.items;
-    console.log(this.items);
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
     if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
   }
@@ -67,5 +93,47 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       items: [],
     };
     return data;
+  }
+
+  private handleViewsSortingOrderChange(): void {
+    if (this.viewsSortingOrder === 'increasing') {
+      this.items.sort((a, b) => Number(a.statistics.viewCount) - Number(b.statistics.viewCount));
+      if (!this.filterSentence) this.tempItems = this.items;
+    }
+    if (this.viewsSortingOrder === 'decreasing') {
+      this.items.sort((a, b) => Number(b.statistics.viewCount) - Number(a.statistics.viewCount));
+      if (!this.filterSentence) this.tempItems = this.items;
+    }
+  }
+
+  private handlePublishedAtSortingOrderChange(): void {
+    if (this.publishedAtSortingOrder === 'increasing') {
+      this.items.sort((a, b) => {
+        if (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt)) return -1;
+        if (new Date(a.snippet.publishedAt) > new Date(b.snippet.publishedAt)) return 1;
+        return 0;
+      });
+      if (!this.filterSentence) this.tempItems = this.items;
+    }
+    if (this.publishedAtSortingOrder === 'decreasing') {
+      this.items.sort((a, b) => {
+        if (new Date(a.snippet.publishedAt) > new Date(b.snippet.publishedAt)) return -1;
+        if (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt)) return 1;
+        return 0;
+      });
+      if (!this.filterSentence) this.tempItems = this.items;
+    }
+  }
+
+  private filterBySentence(): void {
+    const re = new RegExp(this.filterSentence, 'i');
+    this.items = this.tempItems.filter(el => el.snippet.title.match(re));
+    const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
+    if (window.getComputedStyle(sortingButtons[0]).textDecoration.slice(0, 9) === 'underline') {
+      this.handlePublishedAtSortingOrderChange();
+    }
+    if (window.getComputedStyle(sortingButtons[1]).textDecoration.slice(0, 9) === 'underline') {
+      this.handleViewsSortingOrderChange();
+    }
   }
 }
