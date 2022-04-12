@@ -1,4 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { DetailedService } from '../../../services/detailed.service';
+
 import { SearchItem } from '../../../models/search-item.model';
 
 enum Settings {
@@ -12,6 +16,18 @@ enum Settings {
 })
 export class SearchItemComponent {
   @Input() public item: SearchItem;
+  private readonly detailedService: DetailedService;
+
+  constructor(private router: Router, detailedService: DetailedService) {
+    this.detailedService = detailedService;
+  }
+
+  public showItemDetailed(): void {
+    this.detailedService.item = this.item;
+    const route = `main/${this.item.id}/detailed`;
+    this.router.navigate([route]);
+    console.log(this.item);
+  }
 
   public getBorderColor(): string {
     const dateNow = new Date();

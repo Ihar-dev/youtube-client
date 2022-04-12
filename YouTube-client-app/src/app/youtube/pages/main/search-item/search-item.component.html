@@ -21,6 +21,6 @@
     </div>
     <p>{{ item.snippet.publishedAt | date}}</p>
     <div class="search__item-title">{{ item.snippet.title }}</div>
-    <button class="search__item-more-button"></button>
+    <button class="search__item-more-button" (click)="showItemDetailed()"></button>
   </div>
 
