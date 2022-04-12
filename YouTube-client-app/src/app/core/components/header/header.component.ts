@@ -11,12 +11,14 @@ import { HeaderBarModel } from '../../models/header-bar.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  public loginService: LoginService;
+  public readonly loginService: LoginService;
+  private readonly headerBarService: HeaderBarService;
   public headerBarConditions: HeaderBarModel;
 
   constructor(loginService: LoginService, headerBarService: HeaderBarService) {
     this.loginService = loginService;
     this.headerBarConditions = headerBarService.headerBarConditions;
+    this.headerBarService = headerBarService;
   }
 
   public toggleSortingBar(): void {
@@ -24,7 +26,7 @@ export class HeaderComponent {
   }
 
   public makeSearch(dataForSearch: string): void {
-    if (!this.loginService.getUserName()) return;
-    console.log(dataForSearch);
+    if (!this.loginService.getUserName() || !dataForSearch) return;
+    this.headerBarService.changeDataForSearch(dataForSearch);
   }
 }

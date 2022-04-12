@@ -1,1 +1,26 @@
-<p>search-item works!</p>
+<div class="search__item-container" [style.borderBottom]="' solid 5px ' + getBorderColor() + ''">
+    <div class="search__thumbnail-image" [style.backgroundImage]="'url(' + item.snippet.thumbnails.medium.url + ')'">
+    </div>
+    <div class="search__statistics-container">
+      <div class="search__statistics-item">
+        <div class="search__statistics-viewCount-image"></div>
+        <div>{{ item.statistics.viewCount }}</div>
+      </div>
+      <div class="search__statistics-item">
+        <div class="search__statistics-likeCount-image"></div>
+        <div>{{ item.statistics.likeCount }}</div>
+      </div>
+      <div class="search__statistics-item">
+        <div class="search__statistics-dislikeCount-image"></div>
+        <div>{{ item.statistics.dislikeCount }}</div>
+      </div>
+      <div class="search__statistics-item">
+        <div class="search__statistics-commentCount-image"></div>
+        <div>{{ item.statistics.commentCount }}</div>
+      </div>
+    </div>
+    <p>{{ item.snippet.publishedAt | date}}</p>
+    <div class="search__item-title">{{ item.snippet.title }}</div>
+    <button class="search__item-more-button"></button>
+  </div>
+

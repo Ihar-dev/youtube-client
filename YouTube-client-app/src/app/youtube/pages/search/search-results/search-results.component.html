@@ -1,1 +1,5 @@
-<p>search-results works!</p>
+<div class="search__search-container" [class.sorting-bar-display]="headerBarConditions.SortingBarView">
+  <div class="search__inner-search-container">
+    <app-search-item *ngFor="let item of items" [item]="item"></app-search-item>
+  </div>
+</div>
