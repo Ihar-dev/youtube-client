@@ -26,7 +26,7 @@ export class SortingBarComponent {
     this.headerBarConditions = headerBarService.headerBarConditions;
   }
 
-  public makeSentenceFilter() {
+  public makeSentenceFilter(): void {
     this.headerBarService.changeFilterSentence(this.filterSentence);
   }
 

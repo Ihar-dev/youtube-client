@@ -15,8 +15,8 @@ import { LoginService } from '../../services/login.service';
 })
 
 export class LoginComponent implements OnInit {
-  loginService: LoginService;
-  myForm : FormGroup;
+  public readonly loginService: LoginService;
+  public readonly myForm : FormGroup;
 
   constructor(loginService: LoginService, private router: Router) {
     this.loginService = loginService;

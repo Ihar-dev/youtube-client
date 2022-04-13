@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { DetailedService } from '../../../services/detailed.service';
 
@@ -7,15 +7,12 @@ import { DetailedService } from '../../../services/detailed.service';
   templateUrl: './detailed.component.html',
   styleUrls: ['./detailed.component.scss'],
 })
-export class DetailedComponent implements OnInit {
+export class DetailedComponent {
   public readonly detailedService: DetailedService;
   public id: string;
 
   constructor(detailedService: DetailedService) {
     this.detailedService = detailedService;
     this.id = this.detailedService.item.id;
-  }
-
-  ngOnInit(): void {
   }
 }

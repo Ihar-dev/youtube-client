@@ -10,7 +10,7 @@ enum Settings {
   selector: '[appGetBorderColor]',
 })
 export class GetBorderColorDirective implements OnInit {
-  @Input() appGetBorderColor = '';
+  @Input() public appGetBorderColor = '';
 
   constructor(private el: ElementRef) {
     this.el = el;

@@ -20,19 +20,19 @@ export class HeaderBarService {
     };
   }
 
-  public changeDataForSearch(dataForSearch: string) {
+  public changeDataForSearch(dataForSearch: string): void {
     this.dataForSearch$.next(dataForSearch);
   }
 
-  public changeViewsSortingOrder(viewsSortingOrder: string) {
+  public changeViewsSortingOrder(viewsSortingOrder: string): void {
     this.viewsSortingOrder$.next(viewsSortingOrder);
   }
 
-  public changePublishedAtSortingOrder(publishedAtSortingOrder: string) {
+  public changePublishedAtSortingOrder(publishedAtSortingOrder: string): void {
     this.publishedAtSortingOrder$.next(publishedAtSortingOrder);
   }
 
-  public changeFilterSentence(filterSentence: string) {
+  public changeFilterSentence(filterSentence: string): void {
     this.filterSentence$.next(filterSentence);
   }
 }

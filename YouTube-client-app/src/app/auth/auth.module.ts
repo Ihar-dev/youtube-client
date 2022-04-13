@@ -21,4 +21,5 @@ import { MaterialModule } from '../material/material.module';
     LoginComponent,
   ],
 })
+
 export class AuthModule { }
