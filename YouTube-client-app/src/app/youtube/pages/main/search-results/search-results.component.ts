@@ -37,20 +37,17 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     });
 
     this.viewsSortingOrderSubs = this.headerBarService.viewsSortingOrder$.subscribe((viewsSortingOrder): void => {
-      this.sortingService.viewsSortingOrder = viewsSortingOrder;
-      this.sortingService.handleViewsSortingOrderChange();
+      this.sortingService.handleViewsSortingOrderChange(viewsSortingOrder);
     });
 
     this.publishedAtSortingOrderSubs = this.headerBarService.publishedAtSortingOrder$.subscribe(
       (publishedAtSortingOrder): void => {
-        this.sortingService.publishedAtSortingOrder = publishedAtSortingOrder;
-        this.sortingService.handlePublishedAtSortingOrderChange();
+        this.sortingService.handlePublishedAtSortingOrderChange(publishedAtSortingOrder);
       },
     );
 
     this.filterSentenceSubs = this.headerBarService.filterSentence$.subscribe((filterSentence): void => {
-      this.sortingService.filterSentence = filterSentence;
-      this.sortingService.filterBySentence();
+      this.sortingService.filterBySentence(filterSentence);
       this.items = this.sortingService.items;
     });
   }

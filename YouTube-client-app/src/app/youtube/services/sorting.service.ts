@@ -7,9 +7,9 @@ import { SearchResponse } from '../models/search-response.model';
   providedIn: 'root',
 })
 export class SortingService {
-  public viewsSortingOrder: string;
-  public publishedAtSortingOrder: string;
-  public filterSentence: string;
+  private viewsSortingOrder: string;
+  private publishedAtSortingOrder: string;
+  private filterSentence: string;
   public items: SearchItem[];
   private tempItems: SearchItem[];
 
@@ -45,7 +45,8 @@ export class SortingService {
     return data;
   }
 
-  public handleViewsSortingOrderChange(): void {
+  public handleViewsSortingOrderChange(viewsSortingOrder: string): void {
+    this.viewsSortingOrder = viewsSortingOrder;
     if (this.viewsSortingOrder === 'increasing') {
       this.items.sort((a, b) => Number(a.statistics.viewCount) - Number(b.statistics.viewCount));
       if (!this.filterSentence) this.tempItems = this.items;
@@ -56,7 +57,8 @@ export class SortingService {
     }
   }
 
-  public handlePublishedAtSortingOrderChange(): void {
+  public handlePublishedAtSortingOrderChange(publishedAtSortingOrder: string): void {
+    this.publishedAtSortingOrder = publishedAtSortingOrder;
     if (this.publishedAtSortingOrder === 'increasing') {
       this.items.sort((a, b) => {
         if (new Date(a.snippet.publishedAt) < new Date(b.snippet.publishedAt)) return -1;
@@ -75,15 +77,16 @@ export class SortingService {
     }
   }
 
-  public filterBySentence(): void {
+  public filterBySentence(filterSentence: string): void {
+    this.filterSentence = filterSentence;
     const re = new RegExp(this.filterSentence, 'i');
     this.items = this.tempItems.filter(el => el.snippet.title.match(re));
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
     if (window.getComputedStyle(sortingButtons[0]).textDecoration.slice(0, 9) === 'underline') {
-      this.handlePublishedAtSortingOrderChange();
+      this.handlePublishedAtSortingOrderChange(this.publishedAtSortingOrder);
     }
     if (window.getComputedStyle(sortingButtons[1]).textDecoration.slice(0, 9) === 'underline') {
-      this.handleViewsSortingOrderChange();
+      this.handleViewsSortingOrderChange(this.viewsSortingOrder);
     }
   }
 }
