@@ -1,7 +1,7 @@
 <div class="detailed-container">
   <div class="detailed-image"
   [style.backgroundImage]="'url(' + detailedService.item.snippet.thumbnails.maxres.url + ')'"></div>
-  <div class="detailed-description-cont">
+  <div class="detailed-description-cont" [appGetBorderColor] = "detailedService.item.snippet.publishedAt">
     <div class="detailed-header-cont">
       <div class="detailed-title">{{ detailedService.item.snippet.title }}</div>
       <p class="detailed-date">{{ detailedService.item.snippet.publishedAt | date : 'fullDate'}}</p>

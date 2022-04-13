@@ -13,6 +13,7 @@ export class DetailedComponent implements OnInit {
 
   constructor(detailedService: DetailedService) {
     this.detailedService = detailedService;
+    this.id = this.detailedService.item.id;
   }
 
   ngOnInit(): void {
