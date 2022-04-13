@@ -30,6 +30,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.items = this.sortingService.items;
     this.dataForSearchSubs = this.headerBarService.dataForSearch$.subscribe(async (dataForSearch): Promise < void > => {
       console.log(dataForSearch);
       await this.sortingService.handleSearch();

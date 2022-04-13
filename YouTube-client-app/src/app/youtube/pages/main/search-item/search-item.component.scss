@@ -1,10 +1,5 @@
 @import "../../../../../styles.scss";
 
-@mixin statistics-image($w) {
-  width: $w;
-  height: 13px;
-}
-
 .search__item-container {
   display: flex;
   flex-direction: column;
