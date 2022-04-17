@@ -54,7 +54,6 @@ export class DetailedService {
       statistics: {
         viewCount: '',
         likeCount: '',
-        dislikeCount: '',
         favoriteCount: '',
         commentCount: '',
       },
