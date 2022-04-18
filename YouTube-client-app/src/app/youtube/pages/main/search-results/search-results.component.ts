@@ -4,6 +4,7 @@ import {
 import { Subscription } from 'rxjs';
 
 import { SortingService } from '../../../services/sorting.service';
+import { SearchingService } from '../../../services/searching.service';
 import { HeaderBarService } from '../../../../core/services/header-bar.service';
 import { SearchItem } from '../../../models/search-item.model';
 import { HeaderBarModel } from '../../../../core/models/header-bar.model';
@@ -15,6 +16,7 @@ import { HeaderBarModel } from '../../../../core/models/header-bar.model';
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
   private readonly sortingService: SortingService;
+  private readonly searchingService: SearchingService;
   private readonly headerBarService: HeaderBarService;
   public headerBarConditions: HeaderBarModel;
   private dataForSearchSubs: Subscription;
@@ -23,8 +25,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private filterSentenceSubs: Subscription;
   public items: SearchItem[];
 
-  constructor(headerBarService: HeaderBarService, sortingService: SortingService) {
+  constructor(headerBarService: HeaderBarService, sortingService: SortingService, searchingService: SearchingService) {
     this.sortingService = sortingService;
+    this.searchingService = searchingService;
     this.headerBarService = headerBarService;
     this.headerBarConditions = headerBarService.headerBarConditions;
   }
@@ -33,7 +36,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.items = this.sortingService.items;
     this.dataForSearchSubs = this.headerBarService.dataForSearch$.subscribe(async (dataForSearch): Promise < void > => {
       console.log(dataForSearch);
-      await this.sortingService.handleSearch(dataForSearch);
+      await this.searchingService.handleSearch(dataForSearch);
       this.items = this.sortingService.items;
     });
 
