@@ -4,7 +4,7 @@ type ThumbNailType = {
   height: number,
 };
 
-interface YoutubeItem {
+interface PreliminarySearchItem {
   etag: string;
   id: {
     kind: string,
@@ -28,5 +28,5 @@ interface YoutubeItem {
 }
 
 export {
-  YoutubeItem,
+  PreliminarySearchItem,
 };

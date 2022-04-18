@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { SortingService } from './sorting.service';
 
 import { SearchResponse } from '../models/search-response.model';
-import { YoutubeResponse } from '../models/youtube-response.model';
+import { PreliminarySearchItem } from '../models/preliminary-search-item.model';
+import { SearchItem } from '../models/search-item.model';
 
 enum Settings {
   APIUrl = 'https://www.googleapis.com/youtube/v3/',
@@ -22,7 +23,7 @@ export class SearchingService {
   }
 
   public async handleSearch(dataForSearch: string): Promise < void > {
-    let searchData: SearchResponse;
+    let searchData: SearchResponse < SearchItem >;
     searchData = this.getDefaultSearchData();
     searchData = await this.getYoutubeSearchResults(dataForSearch);
     console.log(searchData);
@@ -32,9 +33,9 @@ export class SearchingService {
     if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
   }
 
-  private async getYoutubeSearchResults(dataForSearch: string): Promise < SearchResponse > {
-    let searchData: YoutubeResponse;
-    searchData = this.getDefaultYoutubeData();
+  private async getYoutubeSearchResults(dataForSearch: string): Promise < SearchResponse < SearchItem > > {
+    let searchData: SearchResponse < PreliminarySearchItem >;
+    searchData = this.getDefaultPreliminarySearchData();
     try {
       let url = `${Settings.APIUrl}search?key=${Settings.key}`;
       url += `&type=video&part=snippet&maxResults=${Settings.maxResults}`;
@@ -48,14 +49,14 @@ export class SearchingService {
     searchData.items.forEach((el, index) => {
       (index) ? dataForSecondRequest += `,${el.id.videoId}` : dataForSecondRequest += el.id.videoId;
     });
-    let secondSearchData: SearchResponse;
+    let secondSearchData: SearchResponse < SearchItem >;
     secondSearchData = this.getDefaultSearchData();
     secondSearchData = await this.getYoutubeSecondSearchResults(dataForSecondRequest);
     return secondSearchData;
   }
 
-  private async getYoutubeSecondSearchResults(dataForSecondRequest: string): Promise < SearchResponse > {
-    let searchData: SearchResponse;
+  private async getYoutubeSecondSearchResults(dataForSecondRequest: string): Promise < SearchResponse < SearchItem > > {
+    let searchData: SearchResponse < SearchItem >;
     searchData = this.getDefaultSearchData();
     try {
       let url = `${Settings.APIUrl}videos?key=${Settings.key}`;
@@ -70,7 +71,7 @@ export class SearchingService {
     return searchData;
   }
 
-  private getDefaultYoutubeData(): YoutubeResponse {
+  private getDefaultPreliminarySearchData(): SearchResponse < PreliminarySearchItem > {
     const data = {
       etag: '',
       items: [],
@@ -84,15 +85,16 @@ export class SearchingService {
     return data;
   }
 
-  private getDefaultSearchData(): SearchResponse {
+  private getDefaultSearchData(): SearchResponse < SearchItem > {
     const data = {
-      kind: '',
       etag: '',
+      items: [],
+      kind: '',
       pageInfo: {
         totalResults: 0,
         resultsPerPage: 0,
       },
-      items: [],
+      regionCode: '',
     };
     return data;
   }
