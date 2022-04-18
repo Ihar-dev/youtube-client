@@ -17,17 +17,28 @@ enum Settings {
 })
 export class SearchingService {
   private readonly sortingService: SortingService;
+  private cacheItems: {
+    [key: string]: SearchItem[],
+  };
 
   constructor(sortingService: SortingService) {
     this.sortingService = sortingService;
+    if (localStorage.getItem('youtube-app-cache-items')) {
+      this.cacheItems = JSON.parse(localStorage.getItem('youtube-app-cache-items') || '');
+    } else this.cacheItems = {};
   }
 
   public async handleSearch(dataForSearch: string): Promise < void > {
-    let searchData: SearchResponse < SearchItem >;
-    searchData = this.getDefaultSearchData();
-    searchData = await this.getYoutubeSearchResults(dataForSearch);
-    console.log(searchData);
-    this.sortingService.items = searchData.items;
+    if (this.cacheItems[dataForSearch]) {
+      this.sortingService.items = this.cacheItems[dataForSearch];
+    } else {
+      let searchData: SearchResponse < SearchItem >;
+      searchData = this.getDefaultSearchData();
+      searchData = await this.getYoutubeSearchResults(dataForSearch);
+      this.sortingService.items = searchData.items;
+      this.cacheItems[dataForSearch] = searchData.items;
+      localStorage.setItem('youtube-app-cache-items', JSON.stringify(this.cacheItems));
+    }
     this.sortingService.tempItems = this.sortingService.items;
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
     if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
@@ -67,7 +78,6 @@ export class SearchingService {
     } catch (er) {
       console.log(er);
     }
-    console.log(searchData);
     return searchData;
   }
 
