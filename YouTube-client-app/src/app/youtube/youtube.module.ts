@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { YoutubeRoutingModule } from './youtube-routing.module';
 
@@ -18,6 +19,7 @@ import { GetBorderColorDirective } from './directives/get-border-color.directive
   imports: [
     CommonModule,
     YoutubeRoutingModule,
+    HttpClientModule,
   ],
 })
 export class YoutubeModule { }

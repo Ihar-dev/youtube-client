@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { SortingService } from './sorting.service';
 
@@ -21,7 +22,7 @@ export class SearchingService {
     [key: string]: SearchItem[],
   };
 
-  constructor(sortingService: SortingService) {
+  constructor(sortingService: SortingService, private http: HttpClient) {
     this.sortingService = sortingService;
     if (localStorage.getItem('youtube-app-cache-items')) {
       this.cacheItems = JSON.parse(localStorage.getItem('youtube-app-cache-items') || '');
