@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { HeaderBarModel } from '../models/header-bar.model';
+import { SearchingService } from '../../youtube/services/searching.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +10,22 @@ import { HeaderBarModel } from '../models/header-bar.model';
 
 export class HeaderBarService {
   public headerBarConditions: HeaderBarModel;
-  public dataForSearch$ = new Subject < string >();
+  private readonly searchingService: SearchingService;
+  // public dataForSearch$ = new Subject < string >();
   public viewsSortingOrder$ = new Subject < string >();
   public publishedAtSortingOrder$ = new Subject < string >();
   public filterSentence$ = new Subject < string >();
 
-  constructor() {
+  constructor(searchingService: SearchingService) {
+    this.searchingService = searchingService;
     this.headerBarConditions = {
       SortingBarView: false,
     };
   }
 
   public changeDataForSearch(dataForSearch: string): void {
-    this.dataForSearch$.next(dataForSearch);
+    // this.dataForSearch$.next(dataForSearch);
+    this.searchingService.handleSearch(dataForSearch);
   }
 
   public changeViewsSortingOrder(viewsSortingOrder: string): void {

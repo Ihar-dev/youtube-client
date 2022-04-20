@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { SortingService } from './sorting.service';
 
@@ -21,6 +23,7 @@ export class SearchingService {
   private cacheItems: {
     [key: string]: SearchItem[],
   };
+  public items$ = new Subject < SearchItem[] >();
 
   constructor(sortingService: SortingService, private http: HttpClient) {
     this.sortingService = sortingService;
@@ -32,81 +35,50 @@ export class SearchingService {
   public async handleSearch(dataForSearch: string): Promise < void > {
     if (this.cacheItems[dataForSearch]) {
       this.sortingService.items = this.cacheItems[dataForSearch];
-    } else {
-      let searchData: SearchResponse < SearchItem >;
-      searchData = this.getDefaultSearchData();
-      searchData = await this.getYoutubeSearchResults(dataForSearch);
-      this.sortingService.items = searchData.items;
-      this.cacheItems[dataForSearch] = searchData.items;
-      localStorage.setItem('youtube-app-cache-items', JSON.stringify(this.cacheItems));
-    }
+      this.tempItems();
+    } else this.preliminarySearch(dataForSearch);
+  }
+
+  private tempItems(): void {
     this.sortingService.tempItems = this.sortingService.items;
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
     if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
   }
 
-  private async getYoutubeSearchResults(dataForSearch: string): Promise < SearchResponse < SearchItem > > {
-    let searchData: SearchResponse < PreliminarySearchItem >;
-    searchData = this.getDefaultPreliminarySearchData();
-    try {
-      let url = `${Settings.APIUrl}search?key=${Settings.key}`;
-      url += `&type=video&part=snippet&maxResults=${Settings.maxResults}`;
-      url += `&q=${dataForSearch}`;
-      const res = await fetch(url);
-      searchData = await res.json();
-    } catch (er) {
-      console.log(er);
-    }
-    let dataForSecondRequest = '';
-    searchData.items.forEach((el, index) => {
-      (index) ? dataForSecondRequest += `,${el.id.videoId}` : dataForSecondRequest += el.id.videoId;
+  private preliminarySearch(dataForSearch: string) {
+    this.http.get(`${Settings.APIUrl}search`, {
+      params: new HttpParams()
+        .set('key', Settings.key)
+        .set('type', 'video')
+        .set('part', 'snippet')
+        .set('maxResults', Settings.maxResults)
+        .set('q', dataForSearch),
+    }).pipe(
+      debounceTime(800),
+      distinctUntilChanged(),
+    ).subscribe((response: any) => {
+      const searchData: SearchResponse < PreliminarySearchItem > = response;
+      let dataForSecondRequest = '';
+      searchData.items.forEach((el, index) => {
+        (index) ? dataForSecondRequest += `,${el.id.videoId}` : dataForSecondRequest += el.id.videoId;
+      });
+      this.mainSearch(dataForSecondRequest, dataForSearch);
     });
-    let secondSearchData: SearchResponse < SearchItem >;
-    secondSearchData = this.getDefaultSearchData();
-    secondSearchData = await this.getYoutubeSecondSearchResults(dataForSecondRequest);
-    return secondSearchData;
   }
 
-  private async getYoutubeSecondSearchResults(dataForSecondRequest: string): Promise < SearchResponse < SearchItem > > {
-    let searchData: SearchResponse < SearchItem >;
-    searchData = this.getDefaultSearchData();
-    try {
-      let url = `${Settings.APIUrl}videos?key=${Settings.key}`;
-      url += `&id=${dataForSecondRequest}`;
-      url += '&part=snippet,statistics';
-      const res = await fetch(url);
-      searchData = await res.json();
-    } catch (er) {
-      console.log(er);
-    }
-    return searchData;
-  }
-
-  private getDefaultPreliminarySearchData(): SearchResponse < PreliminarySearchItem > {
-    const data = {
-      etag: '',
-      items: [],
-      kind: '',
-      pageInfo: {
-        totalResults: 0,
-        resultsPerPage: 0,
-      },
-      regionCode: '',
-    };
-    return data;
-  }
-
-  private getDefaultSearchData(): SearchResponse < SearchItem > {
-    const data = {
-      etag: '',
-      items: [],
-      kind: '',
-      pageInfo: {
-        totalResults: 0,
-        resultsPerPage: 0,
-      },
-      regionCode: '',
-    };
-    return data;
+  private mainSearch(dataForSecondRequest: string, dataForSearch: string) {
+    this.http.get(`${Settings.APIUrl}videos`, {
+      params: new HttpParams()
+        .set('key', Settings.key)
+        .set('id', dataForSecondRequest)
+        .set('part', 'snippet,statistics'),
+    }).subscribe((response: any) => {
+      const searchData: SearchResponse < SearchItem > = response;
+      this.items$.next(searchData.items);
+      this.sortingService.items = searchData.items;
+      this.cacheItems[dataForSearch] = searchData.items;
+      localStorage.setItem('youtube-app-cache-items', JSON.stringify(this.cacheItems));
+      this.tempItems();
+    });
   }
 }

@@ -19,7 +19,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private readonly searchingService: SearchingService;
   private readonly headerBarService: HeaderBarService;
   public headerBarConditions: HeaderBarModel;
-  private dataForSearchSubs: Subscription;
+  private itemsSubs: Subscription;
   private viewsSortingOrderSubs: Subscription;
   private publishedAtSortingOrderSubs: Subscription;
   private filterSentenceSubs: Subscription;
@@ -34,10 +34,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.items = this.sortingService.items;
-    this.dataForSearchSubs = this.headerBarService.dataForSearch$.subscribe(async (dataForSearch): Promise < void > => {
-      console.log(dataForSearch);
-      await this.searchingService.handleSearch(dataForSearch);
-      this.items = this.sortingService.items;
+    this.itemsSubs = this.searchingService.items$.subscribe(async (items): Promise < void > => {
+      this.items = items;
     });
 
     this.viewsSortingOrderSubs = this.headerBarService.viewsSortingOrder$.subscribe((viewsSortingOrder): void => {
@@ -57,7 +55,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.dataForSearchSubs.unsubscribe();
+    this.itemsSubs.unsubscribe();
     this.viewsSortingOrderSubs.unsubscribe();
     this.publishedAtSortingOrderSubs.unsubscribe();
     this.filterSentenceSubs.unsubscribe();
