@@ -9,7 +9,6 @@ import { HeaderBarModel } from '../models/header-bar.model';
 
 export class HeaderBarService {
   public headerBarConditions: HeaderBarModel;
-  public dataForSearch$ = new Subject < string >();
   public viewsSortingOrder$ = new Subject < string >();
   public publishedAtSortingOrder$ = new Subject < string >();
   public filterSentence$ = new Subject < string >();
@@ -18,10 +17,6 @@ export class HeaderBarService {
     this.headerBarConditions = {
       SortingBarView: false,
     };
-  }
-
-  public changeDataForSearch(dataForSearch: string): void {
-    this.dataForSearch$.next(dataForSearch);
   }
 
   public changeViewsSortingOrder(viewsSortingOrder: string): void {

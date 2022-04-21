@@ -1,15 +1,12 @@
-import {
-  SearchItem,
-} from './search-item.model';
-
-interface SearchResponse {
-  kind: string;
+interface SearchResponse < T > {
   etag: string;
+  items: T[];
+  kind: string;
   pageInfo: {
     totalResults: number,
     resultsPerPage: number,
   };
-  items: SearchItem[];
+  regionCode: string;
 }
 
 export {

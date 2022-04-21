@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { SearchItem } from '../models/search-item.model';
-import { SearchResponse } from '../models/search-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,39 +10,7 @@ export class SortingService {
   private publishedAtSortingOrder: string;
   private filterSentence: string;
   public items: SearchItem[];
-  private tempItems: SearchItem[];
-
-  public async handleSearch(): Promise < void > {
-    let searchData: SearchResponse;
-    searchData = this.getDefaultSearchData();
-    searchData = await this.getSearchResults();
-    this.items = searchData.items;
-    this.tempItems = this.items;
-    const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
-    if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
-  }
-
-  private async getSearchResults(): Promise < SearchResponse > {
-    let searchData: SearchResponse;
-    searchData = this.getDefaultSearchData();
-    const url = 'https://raw.githubusercontent.com/Ihar-dev/tasks/master/tasks/angular/response.json';
-    const res = await fetch(url);
-    searchData = await res.json();
-    return searchData;
-  }
-
-  private getDefaultSearchData(): SearchResponse {
-    const data = {
-      kind: '',
-      etag: '',
-      pageInfo: {
-        totalResults: 0,
-        resultsPerPage: 0,
-      },
-      items: [],
-    };
-    return data;
-  }
+  public tempItems: SearchItem[];
 
   public handleViewsSortingOrderChange(viewsSortingOrder: string): void {
     this.viewsSortingOrder = viewsSortingOrder;

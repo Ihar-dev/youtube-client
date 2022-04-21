@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { LoginService } from '../../../auth/services/login.service';
 import { HeaderBarService } from '../../services/header-bar.service';
+import { SearchingService } from '../../../youtube/services/searching.service';
 
 import { HeaderBarModel } from '../../models/header-bar.model';
 
@@ -10,23 +12,43 @@ import { HeaderBarModel } from '../../models/header-bar.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   public readonly loginService: LoginService;
   private readonly headerBarService: HeaderBarService;
+  private readonly searchingService: SearchingService;
   public headerBarConditions: HeaderBarModel;
+  private loggedInSubs: Subscription;
+  public logTitle: string;
+  public dataForSearch: string;
 
-  constructor(loginService: LoginService, headerBarService: HeaderBarService) {
+  constructor(loginService: LoginService, headerBarService: HeaderBarService, searchingService: SearchingService) {
     this.loginService = loginService;
+    this.searchingService = searchingService;
     this.headerBarConditions = headerBarService.headerBarConditions;
     this.headerBarService = headerBarService;
+    (this.loginService.getUserName()) ? this.logTitle = 'log out' : this.logTitle = 'log in';
+  }
+
+  public getUserName(): string {
+    return (this.loginService.getUserName()) ? this.loginService.getUserName() : 'not authorized';
+  }
+
+  ngOnInit(): void {
+    this.loggedInSubs = this.loginService.loggedIn$.subscribe((loggedIn: boolean): void => {
+      (loggedIn) ? this.logTitle = 'log out' : this.logTitle = 'log in';
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.loggedInSubs.unsubscribe();
   }
 
   public toggleSortingBar(): void {
     this.headerBarConditions.SortingBarView = !this.headerBarConditions.SortingBarView;
   }
 
-  public makeSearch(dataForSearch: string): void {
-    if (!this.loginService.getUserName() || !dataForSearch) return;
-    this.headerBarService.changeDataForSearch(dataForSearch);
+  public makeSearch(): void {
+    if (!this.loginService.getUserName() || !this.dataForSearch || this.dataForSearch.length < 3) return;
+    this.searchingService.handleSearch(this.dataForSearch);
   }
 }

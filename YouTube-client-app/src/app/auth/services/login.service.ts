@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { AppAuthorizationModel } from '../models/youtube-app-authorization.model';
 
@@ -14,6 +15,7 @@ enum AuthSettings {
 
 export class LoginService {
   private authorization: AppAuthorizationModel;
+  public loggedIn$ = new Subject < boolean >();
 
   constructor(private router: Router) {
     if (localStorage.getItem('youtube-app-authorization')) {
@@ -36,12 +38,14 @@ export class LoginService {
     this.authorization.token = text;
     localStorage.setItem('youtube-app-authorization', JSON.stringify(this.authorization));
     this.router.navigate(['/main']);
+    this.loggedIn$.next(true);
   }
 
   public resetUser(): void {
     this.authorization = this.getDefault();
     localStorage.setItem('youtube-app-authorization', '');
     this.router.navigate(['/login']);
+    this.loggedIn$.next(false);
   }
 
   private getDefault(): AppAuthorizationModel {

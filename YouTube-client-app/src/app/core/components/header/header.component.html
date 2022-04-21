@@ -1,13 +1,12 @@
 <div class="header__container">
   <div class="header__search-container">
     <div class="header__logo"></div>
-    <input id="header__search-input" type="text" placeholder="What are you want to find out?" #dataForSearch>
-    <button class="header__search-button" (click)="makeSearch(dataForSearch.value)"></button>
+    <input id="header__search-input" type="text" placeholder="What are you want to find out?" [(ngModel)]="dataForSearch" (input)="makeSearch()">
     <button class="header__search-settings-button" (click)="toggleSortingBar()" title="settings"></button>
   </div>
   <div class="header__user-container">
-    <p>{{ loginService.getUserName() }}</p>
-    <button class="header__user-logo" (click)="loginService.resetUser()" title="log out"></button>
+    <p>{{ getUserName() }}</p>
+    <button class="header__user-logo" (click)="loginService.resetUser()" [title]="logTitle"></button>
   </div>
 </div>
 
