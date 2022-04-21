@@ -3,21 +3,27 @@
   <form class="example-form" [formGroup]="myForm">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>login</mat-label>
-      <mat-hint>Min 4 characters</mat-hint>
-      <input type="text" matInput required #nameInput name="name" formControlName="userName">
+      <mat-hint>Please enter a login email</mat-hint>
+      <input type="email" matInput required #nameInput name="name" formControlName="userName">
     </mat-form-field>
     <div *ngIf="myForm.controls['userName'].invalid && myForm.controls['userName'].touched">
-      invalid name
+      The login email is invalid
     </div>
   </form>
   <form class="example-form" [formGroup]="myForm">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>password</mat-label>
-      <mat-hint>Min 6 characters</mat-hint>
+      <mat-hint>Please enter a password</mat-hint>
       <input type="password" matInput required #passwordInput name="password" formControlName="userPassword">
     </mat-form-field>
     <div *ngIf="myForm.controls['userPassword'].invalid && myForm.controls['userPassword'].touched">
-      invalid password
+      Your password isn't strong enough
+    </div>
+    <div *ngIf="myForm.controls['userPassword'].invalid && myForm.controls['userPassword'].touched">
+      &bull;at least 8 characters<br>
+      &bull;a mixture of both uppercase and lowercase letters<br>
+      &bull;a mixture of letters and numbers<br>
+      &bull;inclusion of at least one special character, e.g., ! @ # ? ]
     </div>
   </form>
   <button class="login-container__login-button" (click)="loginService.setUser(nameInput.value, passwordInput.value,
