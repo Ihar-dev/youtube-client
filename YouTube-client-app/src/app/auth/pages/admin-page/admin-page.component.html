@@ -9,8 +9,7 @@
     <div *ngIf="cardForm.controls['userTitle'].invalid && cardForm.controls['userTitle'].touched">
       <span *ngIf="userTitle!.errors?.['required']">The title is required</span>
       <span *ngIf="userTitle!.errors?.['minlength']">The title is too short</span>
-      <span *ngIf="userTitle!.errors?.['maxLength']">The title is too long</span>
-      <!-- <span *ngIf="f['userTitle'].getError('maxLength')!==null">The title is too long</span> -->
+      <span *ngIf="!userTitle!.errors?.['required'] && !userTitle!.errors?.['minlength']">The title is too long</span>
     </div>
   </form>
   <form class="example-form" [formGroup]="cardForm">

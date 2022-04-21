@@ -43,8 +43,4 @@ export class AdminPageComponent implements OnInit {
   public get userTitle(): AbstractControl | null {
     return this.cardForm.get('userTitle');
   }
-
-  /* get f() {
-    return this.cardForm.controls;
-  } */
 }
