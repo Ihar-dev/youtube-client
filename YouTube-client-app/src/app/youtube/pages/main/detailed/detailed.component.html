@@ -1,0 +1,27 @@
+<button class="detailed__back-button" (click)="router.navigate(['/main'])"></button>
+<div class="detailed-container">
+  <div class="detailed-image"
+    [style.backgroundImage]="'url(' + detailedService.item.snippet.thumbnails.maxres.url + ')'"></div>
+  <div class="detailed-description-cont" [appGetBorderColor]="detailedService.item.snippet.publishedAt">
+    <div class="detailed-header-cont">
+      <div class="detailed-title">{{ detailedService.item.snippet.title }}</div>
+      <p class="detailed-date">{{ detailedService.item.snippet.publishedAt | date : 'fullDate'}}</p>
+    </div>
+    <p>Description:</p>
+    <div class="detailed-description">{{ detailedService.item.snippet.description }}</div>
+    <div class="detailed__statistics-container">
+      <div class="detailed__statistics-item">
+        <div class="detailed__statistics-viewCount-image"></div>
+        <div>{{ detailedService.item.statistics.viewCount }}</div>
+      </div>
+      <div class="detailed__statistics-item">
+        <div class="detailed__statistics-likeCount-image"></div>
+        <div>{{ detailedService.item.statistics.likeCount }}</div>
+      </div>
+      <div class="detailed__statistics-item">
+        <div class="detailed__statistics-commentCount-image"></div>
+        <div>{{ detailedService.item.statistics.commentCount }}</div>
+      </div>
+    </div>
+  </div>
+</div>
