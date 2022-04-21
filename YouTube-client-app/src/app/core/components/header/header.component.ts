@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { LoginService } from '../../../auth/services/login.service';
 import { HeaderBarService } from '../../services/header-bar.service';
+import { SearchingService } from '../../../youtube/services/searching.service';
 
 import { HeaderBarModel } from '../../models/header-bar.model';
 
@@ -14,12 +15,15 @@ import { HeaderBarModel } from '../../models/header-bar.model';
 export class HeaderComponent implements OnInit, OnDestroy {
   public readonly loginService: LoginService;
   private readonly headerBarService: HeaderBarService;
+  private readonly searchingService: SearchingService;
   public headerBarConditions: HeaderBarModel;
   private loggedInSubs: Subscription;
   public logTitle: string;
+  public dataForSearch: string;
 
-  constructor(loginService: LoginService, headerBarService: HeaderBarService) {
+  constructor(loginService: LoginService, headerBarService: HeaderBarService, searchingService: SearchingService) {
     this.loginService = loginService;
+    this.searchingService = searchingService;
     this.headerBarConditions = headerBarService.headerBarConditions;
     this.headerBarService = headerBarService;
     (this.loginService.getUserName()) ? this.logTitle = 'log out' : this.logTitle = 'log in';
@@ -43,8 +47,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headerBarConditions.SortingBarView = !this.headerBarConditions.SortingBarView;
   }
 
-  public makeSearch(dataForSearch: string): void {
-    if (!this.loginService.getUserName() || !dataForSearch) return;
-    this.headerBarService.changeDataForSearch(dataForSearch);
+  public makeSearch(): void {
+    if (!this.loginService.getUserName() || !this.dataForSearch || this.dataForSearch.length < 3) return;
+    this.searchingService.handleSearch(this.dataForSearch);
   }
 }
