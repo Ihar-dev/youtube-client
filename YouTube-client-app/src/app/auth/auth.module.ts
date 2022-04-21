@@ -6,10 +6,12 @@ import { AuthRoutingModule } from './auth-routing.module';
 
 import { LoginComponent } from './pages/login/login.component';
 import { MaterialModule } from '../material/material.module';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
+    AdminPageComponent,
   ],
   imports: [
     CommonModule,

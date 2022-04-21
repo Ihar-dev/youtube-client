@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { LoginService } from '../../../auth/services/login.service';
 import { HeaderBarService } from '../../services/header-bar.service';
@@ -21,7 +22,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public logTitle: string;
   public dataForSearch: string;
 
-  constructor(loginService: LoginService, headerBarService: HeaderBarService, searchingService: SearchingService) {
+  constructor(
+    loginService: LoginService,
+    headerBarService: HeaderBarService,
+    searchingService: SearchingService,
+    public router: Router,
+  ) {
     this.loginService = loginService;
     this.searchingService = searchingService;
     this.headerBarConditions = headerBarService.headerBarConditions;

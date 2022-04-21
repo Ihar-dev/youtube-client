@@ -1,6 +1,6 @@
 <div class="header__container">
   <div class="header__search-container">
-    <div class="header__logo"></div>
+    <button class="header__logo" title="Create New Card" (click)="router.navigate(['/admin'])"></button>
     <input id="header__search-input" type="text" placeholder="What are you want to find out?" [(ngModel)]="dataForSearch" (input)="makeSearch()">
     <button class="header__search-settings-button" (click)="toggleSortingBar()" title="settings"></button>
   </div>
