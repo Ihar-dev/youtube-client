@@ -5,6 +5,7 @@ import {
 import { Observable } from 'rxjs';
 
 enum Settings {
+  APIUrl = 'https://www.googleapis.com/youtube/v3/',
   key = 'AIzaSyAWpNsq0IfVimHbVnIeNAEpT883uTazfvk',
 }
 
@@ -17,6 +18,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     next: HttpHandler,
   ): Observable < HttpEvent < any > > {
     const newReq = req.clone({
+      url: Settings.APIUrl + req.url,
       params: (req.params ? req.params : new HttpParams())
         .set('key', Settings.key),
     });
