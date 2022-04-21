@@ -11,7 +11,7 @@ import { SearchItem } from '../models/search-item.model';
 
 enum Settings {
   APIUrl = 'https://www.googleapis.com/youtube/v3/',
-  key = 'AIzaSyAWpNsq0IfVimHbVnIeNAEpT883uTazfvk',
+
   maxResults = '12',
 }
 
@@ -48,7 +48,6 @@ export class SearchingService {
   private preliminarySearch(dataForSearch: string) {
     this.http.get(`${Settings.APIUrl}search`, {
       params: new HttpParams()
-        .set('key', Settings.key)
         .set('type', 'video')
         .set('part', 'snippet')
         .set('maxResults', Settings.maxResults)
@@ -69,7 +68,6 @@ export class SearchingService {
   private mainSearch(dataForSecondRequest: string, dataForSearch: string) {
     this.http.get(`${Settings.APIUrl}videos`, {
       params: new HttpParams()
-        .set('key', Settings.key)
         .set('id', dataForSecondRequest)
         .set('part', 'snippet,statistics'),
     }).subscribe((response: any) => {
