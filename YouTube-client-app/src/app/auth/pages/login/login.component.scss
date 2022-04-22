@@ -1,0 +1,45 @@
+@import '../../../../styles.scss';
+
+:host {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  height: 425px;
+  z-index: 100;
+
+  .login-container {
+    position: absolute;
+    width: 395px;
+    height: 415px;
+    padding: 20px 20px;
+    @extend %flex-column-pattern;
+    justify-content: space-between;
+    row-gap: 15px;
+    border-radius: 5px;
+    left: calc(50% + 425px);
+    background-color: #F2F2F2;
+
+    p {
+      @extend %big-text;
+      align-self: flex-start;
+    }
+
+    .example-form {
+      min-width: 150px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .example-full-width {
+      width: 100%;
+    }
+
+    .login-container__login-button {
+      @include background-image-block("../../../../assets/svg/login-button.svg", 80%, 5px);
+      width: calc(124px / 0.8);
+      height: calc(30px / 0.8);
+      align-self: flex-end;
+    }
+  }
+}
