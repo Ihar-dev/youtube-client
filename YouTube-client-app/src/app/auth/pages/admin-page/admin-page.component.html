@@ -4,7 +4,7 @@
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Title</mat-label>
       <mat-hint>Please enter a title</mat-hint>
-      <input type="text" matInput required #nameInput name="name" formControlName="userTitle">
+      <input type="text" matInput required #titleInput name="title" formControlName="userTitle">
     </mat-form-field>
     <div *ngIf="cardForm.controls['userTitle'].invalid && cardForm.controls['userTitle'].touched">
       <span *ngIf="userTitle!.errors?.['required']">The title is required</span>
@@ -14,20 +14,36 @@
   </form>
   <form class="example-form" [formGroup]="cardForm">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>password</mat-label>
-      <mat-hint>Please enter a password</mat-hint>
-      <input type="password" matInput required #passwordInput name="password" formControlName="userPassword">
+      <mat-label>Description</mat-label>
+      <mat-hint>Please enter a description</mat-hint>
+      <textarea type="text" matInput #descriptionInput name="description" formControlName="userDescription"></textarea>
     </mat-form-field>
-    <div *ngIf="cardForm.controls['userPassword'].invalid && cardForm.controls['userPassword'].touched">
-      Your password isn't strong enough
-    </div>
-    <div *ngIf="cardForm.controls['userPassword'].invalid && cardForm.controls['userPassword'].touched">
-      &bull;at least 8 characters<br>
-      &bull;a mixture of both uppercase and lowercase letters<br>
-      &bull;a mixture of letters and numbers<br>
-      &bull;inclusion of at least one special character, e.g., ! @ # ? ]
+    <div *ngIf="cardForm.controls['userDescription'].invalid && cardForm.controls['userDescription'].touched">
+      The description is too long
     </div>
   </form>
-  <button class="admin-container__admin-button" (click)="loginService.setUser(nameInput.value, passwordInput.value,
-  cardForm.controls['userTitle'].invalid, cardForm.controls['userPassword'].invalid)" title="log in"></button>
+  <form class="example-form" [formGroup]="cardForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Img</mat-label>
+      <mat-hint>Please enter a link to the image</mat-hint>
+      <input type="text" matInput required #imgInput name="img" formControlName="userImg">
+    </mat-form-field>
+    <div *ngIf="cardForm.controls['userImg'].invalid && cardForm.controls['userImg'].touched">
+      The image link is invalid
+    </div>
+  </form>
+  <form class="example-form" [formGroup]="cardForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Video link</mat-label>
+      <mat-hint>Please enter a link to the video</mat-hint>
+      <input type="text" matInput required #videoInput name="video" formControlName="userVideo">
+    </mat-form-field>
+    <div *ngIf="cardForm.controls['userVideo'].invalid && cardForm.controls['userVideo'].touched">
+      The video link is invalid
+    </div>
+  </form>
+  <button class="admin-container__admin-button" (click)="submitForm(titleInput.value, cardForm.controls['userTitle'].invalid
+  , descriptionInput.value, cardForm.controls['userDescription'].invalid
+  , imgInput.value, cardForm.controls['userImg'].invalid
+  , videoInput.value, cardForm.controls['userVideo'].invalid)" title="Submit"></button>
 </div>
