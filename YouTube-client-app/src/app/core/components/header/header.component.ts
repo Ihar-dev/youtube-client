@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     loginService: LoginService,
     headerBarService: HeaderBarService,
     searchingService: SearchingService,
-    public router: Router,
+    private router: Router,
   ) {
     this.loginService = loginService;
     this.searchingService = searchingService;
@@ -56,5 +56,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public makeSearch(): void {
     if (!this.loginService.getUserName() || !this.dataForSearch || this.dataForSearch.length < 3) return;
     this.searchingService.handleSearch(this.dataForSearch);
+  }
+
+  public openNewCardForm(): void {
+    if (this.loginService.getUserName()) this.router.navigate(['/admin']);
   }
 }
