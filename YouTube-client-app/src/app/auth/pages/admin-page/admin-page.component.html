@@ -6,7 +6,7 @@
       <mat-hint>Please enter a title</mat-hint>
       <input type="text" matInput required #titleInput name="title" formControlName="userTitle">
     </mat-form-field>
-    <div *ngIf="cardForm.controls['userTitle'].invalid && cardForm.controls['userTitle'].touched">
+    <div *ngIf="cardForm.controls['userTitle'].invalid && cardForm.controls['userTitle'].dirty">
       <span *ngIf="userTitle!.errors?.['required']">The title is required</span>
       <span *ngIf="userTitle!.errors?.['minlength']">The title is too short</span>
       <span *ngIf="!userTitle!.errors?.['required'] && !userTitle!.errors?.['minlength']">The title is too long</span>
@@ -18,7 +18,7 @@
       <mat-hint>Please enter a description</mat-hint>
       <textarea type="text" matInput #descriptionInput name="description" formControlName="userDescription"></textarea>
     </mat-form-field>
-    <div *ngIf="cardForm.controls['userDescription'].invalid && cardForm.controls['userDescription'].touched">
+    <div *ngIf="cardForm.controls['userDescription'].invalid && cardForm.controls['userDescription'].dirty">
       The description is too long
     </div>
   </form>
@@ -28,7 +28,7 @@
       <mat-hint>Please enter a link to the image</mat-hint>
       <input type="text" matInput required #imgInput name="img" formControlName="userImg">
     </mat-form-field>
-    <div *ngIf="cardForm.controls['userImg'].invalid && cardForm.controls['userImg'].touched">
+    <div *ngIf="cardForm.controls['userImg'].invalid && cardForm.controls['userImg'].dirty">
       The image link is invalid
     </div>
   </form>
@@ -38,12 +38,23 @@
       <mat-hint>Please enter a link to the video</mat-hint>
       <input type="text" matInput required #videoInput name="video" formControlName="userVideo">
     </mat-form-field>
-    <div *ngIf="cardForm.controls['userVideo'].invalid && cardForm.controls['userVideo'].touched">
+    <div *ngIf="cardForm.controls['userVideo'].invalid && cardForm.controls['userVideo'].dirty">
       The video link is invalid
+    </div>
+  </form>
+  <form class="example-form" [formGroup]="cardForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Creation date</mat-label>
+      <mat-hint>Please enter a creation date</mat-hint>
+      <input type="date" matInput required #dateInput name="date" formControlName="userDate">
+    </mat-form-field>
+    <div *ngIf="cardForm.controls['userDate'].invalid && cardForm.controls['userDate'].dirty">
+      The date is invalid
     </div>
   </form>
   <button class="admin-container__admin-button" (click)="submitForm(titleInput.value, cardForm.controls['userTitle'].invalid
   , descriptionInput.value, cardForm.controls['userDescription'].invalid
   , imgInput.value, cardForm.controls['userImg'].invalid
-  , videoInput.value, cardForm.controls['userVideo'].invalid)" title="Submit"></button>
+  , videoInput.value, cardForm.controls['userVideo'].invalid
+  , dateInput.value, cardForm.controls['userDate'].invalid)" title="Submit"></button>
 </div>

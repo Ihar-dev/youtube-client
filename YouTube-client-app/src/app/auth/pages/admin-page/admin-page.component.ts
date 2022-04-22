@@ -10,6 +10,10 @@ import {
 } from '@angular/forms';
 
 import {
+  Router,
+} from '@angular/router';
+
+import {
   LoginService,
 } from '../../services/login.service';
 
@@ -22,7 +26,7 @@ export class AdminPageComponent implements OnInit {
   public readonly loginService: LoginService;
   public cardForm: FormGroup;
 
-  constructor(loginService: LoginService) {
+  constructor(loginService: LoginService, private router: Router) {
     this.loginService = loginService;
   }
 
@@ -42,7 +46,17 @@ export class AdminPageComponent implements OnInit {
       userVideo: new FormControl('', [
         Validators.pattern(/(http|https):\/\/([\w.]+\/?)\S*/),
       ]),
+      userDate: new FormControl('', [
+        this.inputDateValidator,
+      ]),
     });
+  }
+
+  private inputDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const dateNow = new Date();
+    const inputDate = new Date(control.value);
+    if (dateNow.getUTCDate() >= inputDate.getUTCDate()) return { forbiddenDate: true };
+    return null;
   }
 
   public get userTitle(): AbstractControl | null {
@@ -58,8 +72,12 @@ export class AdminPageComponent implements OnInit {
     isUserImgInvalid: boolean,
     userVideo: string,
     isUserVideoInvalid: boolean,
+    userDate: string,
+    isUserDateInvalid: boolean,
   ): void {
-    if (isUserTitleInvalid || isUserDescriptionInvalid || isUserImgInvalid || isUserVideoInvalid) return;
-    console.log(`submitting: title- ${userTitle}, description- ${userDescription}, img- ${userImg}, video- ${userVideo}`);
+    if (isUserTitleInvalid || isUserDescriptionInvalid || isUserImgInvalid || isUserVideoInvalid || isUserDateInvalid) return;
+    console.log(`submitting: title- ${userTitle}, description- ${userDescription}, img- ${userImg}
+    , video- ${userVideo}, date- ${userDate}`);
+    this.router.navigate(['/main']);
   }
 }
