@@ -17,6 +17,8 @@ import {
   LoginService,
 } from '../../services/login.service';
 
+import { AdminService } from '../../services/admin.service';
+
 @Component({
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
@@ -24,10 +26,12 @@ import {
 })
 export class AdminPageComponent implements OnInit {
   public readonly loginService: LoginService;
+  private readonly adminService: AdminService;
   public cardForm: FormGroup;
 
-  constructor(loginService: LoginService, private router: Router) {
+  constructor(loginService: LoginService, private router: Router, adminService: AdminService) {
     this.loginService = loginService;
+    this.adminService = adminService;
   }
 
   ngOnInit(): void {
@@ -75,6 +79,7 @@ export class AdminPageComponent implements OnInit {
     userDate: string,
     isUserDateInvalid: boolean,
   ): void {
+    this.adminService.addNewCard(userTitle, userDescription, userImg, userVideo, userDate);
     if (isUserTitleInvalid || isUserDescriptionInvalid || isUserImgInvalid || isUserVideoInvalid || isUserDateInvalid) return;
     console.log(`submitting: title- ${userTitle}, description- ${userDescription}, img- ${userImg}
     , video- ${userVideo}, date- ${userDate}`);
