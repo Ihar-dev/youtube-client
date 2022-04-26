@@ -3,7 +3,8 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
-  "overrides": [{
+  "overrides": [
+    {
       "files": [
         "*.ts"
       ],
@@ -41,11 +42,20 @@
         "class-methods-use-this": "off",
         "no-console": "off",
         "linebreak-style": "off",
-        "@typescript-eslint/lines-between-class-members": ["off"],
+        "@typescript-eslint/lines-between-class-members": [
+          "off"
+        ],
         "arrow-parens": "off",
-        "@typescript-eslint/no-unused-expressions": ["off"],
+        "@typescript-eslint/no-unused-expressions": [
+          "off"
+        ],
         "no-plusplus": "off",
-        "max-len": ["error", { "code": 130 }]
+        "max-len": [
+          "error",
+          {
+            "code": 130
+          }
+        ]
       }
     },
     {
@@ -56,6 +66,14 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:ngrx/recommended"
+      ]
     }
   ]
 }
