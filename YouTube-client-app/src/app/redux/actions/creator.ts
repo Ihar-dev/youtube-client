@@ -17,7 +17,7 @@ const creatorReducer = createReducer(
   initialState,
   on(addCard, state => ({
     ...state,
-    customCards: state.customCards
+    customCards: JSON.parse(JSON.stringify(state.customCards)),
   })),
 );
 
