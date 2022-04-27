@@ -1,8 +1,6 @@
 import {
   createFeatureSelector,
   createSelector,
-  Selector,
-  State,
 } from '@ngrx/store';
 import {
   CreatorStateModel
