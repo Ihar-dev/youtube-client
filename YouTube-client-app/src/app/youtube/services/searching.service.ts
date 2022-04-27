@@ -26,7 +26,6 @@ export class SearchingService {
   private cacheItems: {
     [key: string]: SearchItem[],
   };
-  public items$ = new Subject < SearchItem[] > ();
   private keyInput$ = new Subject < string > ();
 
   constructor(sortingService: SortingService, private httpClient: HttpClient, store: Store) {
@@ -76,8 +75,6 @@ export class SearchingService {
       }))
     ).subscribe((response: any) => {
       const searchData: SearchResponse < SearchItem > = response;
-      this.items$.next(searchData.items);
-      this.sortingService.items = searchData.items;
       const data: SearchItem[] = searchData.items;
       this.store.dispatch(addSearchItems({data}));
       this.cacheItems[dataForSearch] = searchData.items;

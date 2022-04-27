@@ -25,7 +25,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private publishedAtSortingOrderSubs: Subscription;
   private filterSentenceSubs: Subscription;
   public items: SearchItem[];
-  private readonly store: Store;
+  private store: Store;
   private cards$: Observable < CreatorStateModel >;
   private cardsSubs: Subscription;
 
@@ -42,6 +42,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     this.cardsSubs = this.cards$.subscribe((data: CreatorStateModel): void => {
       this.items = [...data.customCards, ...data.searchItems],
+      this.sortingService.items = this.items;
       console.log(this.items);
     });
 
