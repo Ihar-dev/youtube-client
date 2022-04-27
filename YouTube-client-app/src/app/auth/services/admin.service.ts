@@ -6,7 +6,7 @@ import {
 } from '@ngrx/store';
 
 import {
-  addCard
+  addCustomCard
 } from '../../redux/actions/creator';
 import {
   SearchItem
@@ -27,8 +27,7 @@ export class AdminService {
     item.snippet.thumbnails.maxres.url = userImg;
     item.snippet.publishedAt = userDate;
     item.id = userVideo;
-
-    this.store.dispatch(addCard(item));
+    this.store.dispatch(addCustomCard(item));
   }
 
   private getDefaultItem(): SearchItem {

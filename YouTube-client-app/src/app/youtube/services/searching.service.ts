@@ -3,6 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+import {
+  Store
+} from '@ngrx/store';
+
+import {
+  addSearchItems
+} from '../../redux/actions/creator';
+
 import { SortingService } from './sorting.service';
 
 import { SearchResponse } from '../models/search-response.model';
@@ -18,14 +26,16 @@ enum Settings {
 })
 export class SearchingService {
   private readonly sortingService: SortingService;
+  private readonly store: Store;
   private cacheItems: {
     [key: string]: SearchItem[],
   };
   public items$ = new Subject < SearchItem[] >();
   private keyInput$ = new Subject < string >();
 
-  constructor(sortingService: SortingService, private httpClient: HttpClient) {
+  constructor(sortingService: SortingService, private httpClient: HttpClient, store: Store) {
     this.sortingService = sortingService;
+    this.store = store;
     if (localStorage.getItem('youtube-app-cache-items')) {
       this.cacheItems = JSON.parse(localStorage.getItem('youtube-app-cache-items') || '');
     } else this.cacheItems = {};
@@ -72,6 +82,8 @@ export class SearchingService {
       const searchData: SearchResponse < SearchItem > = response;
       this.items$.next(searchData.items);
       this.sortingService.items = searchData.items;
+      const data: SearchItem [] = searchData.items;
+      this.store.dispatch(addSearchItems({data}));
       this.cacheItems[dataForSearch] = searchData.items;
       localStorage.setItem('youtube-app-cache-items', JSON.stringify(this.cacheItems));
       this.tempItems();
