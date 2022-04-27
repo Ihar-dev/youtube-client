@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, mergeMap, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import {
-  Store
-} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
-import {
-  addSearchItems
-} from '../../redux/actions/creator.actions';
+import { addSearchItems } from '../../redux/actions/creator.actions';
 
 import { SortingService } from './sorting.service';
 
@@ -30,8 +26,8 @@ export class SearchingService {
   private cacheItems: {
     [key: string]: SearchItem[],
   };
-  public items$ = new Subject < SearchItem[] >();
-  private keyInput$ = new Subject < string >();
+  public items$ = new Subject < SearchItem[] > ();
+  private keyInput$ = new Subject < string > ();
 
   constructor(sortingService: SortingService, private httpClient: HttpClient, store: Store) {
     this.sortingService = sortingService;
@@ -39,7 +35,7 @@ export class SearchingService {
     if (localStorage.getItem('youtube-app-cache-items')) {
       this.cacheItems = JSON.parse(localStorage.getItem('youtube-app-cache-items') || '');
     } else this.cacheItems = {};
-    this.keyInput$.pipe(debounceTime(1000)).subscribe(dataForSearch => this.preliminarySearch(dataForSearch));
+    this.keyInput$.pipe(debounceTime(1000)).subscribe(dataForSearch => this.mergeMapSearch(dataForSearch));
   }
 
   public async handleSearch(dataForSearch: string): Promise < void > {
@@ -52,37 +48,37 @@ export class SearchingService {
   private tempItems(): void {
     this.sortingService.tempItems = this.sortingService.items;
     const sortingButtons: NodeListOf < HTMLElement > | null = document.querySelectorAll('.header__sorting-button');
-    if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none');/* eslint-disable-line */
+    if (sortingButtons.length) sortingButtons.forEach(elem => elem.style.textDecoration = 'none'); /* eslint-disable-line */
   }
 
-  private preliminarySearch(dataForSearch: string): void {
+  private mergeMapSearch(dataForSearch: string): void {
     this.httpClient.get('search', {
       params: new HttpParams()
         .set('type', 'video')
         .set('part', 'snippet')
         .set('maxResults', Settings.maxResults)
         .set('q', dataForSearch),
-    })
-      .subscribe((response: any) => {
-        const searchData: SearchResponse < PreliminarySearchItem > = response;
-        let dataForSecondRequest = '';
-        searchData.items.forEach((el, index) => {
-          (index) ? dataForSecondRequest += `,${el.id.videoId}` : dataForSecondRequest += el.id.videoId;
-        });
-        this.mainSearch(dataForSecondRequest, dataForSearch);
-      });
-  }
-
-  private mainSearch(dataForSecondRequest: string, dataForSearch: string): void {
-    this.httpClient.get('videos', {
-      params: new HttpParams()
-        .set('id', dataForSecondRequest)
-        .set('part', 'snippet,statistics'),
-    }).subscribe((response: any) => {
+    }).pipe(
+      map(
+        (response: any) => {
+          const searchData: SearchResponse < PreliminarySearchItem > = response;
+          let dataForSecondRequest = '';
+          searchData.items.forEach((el, index) => {
+            (index) ? dataForSecondRequest += `,${el.id.videoId}`: dataForSecondRequest += el.id.videoId;
+          });
+          return dataForSecondRequest;
+        }
+      ),
+      mergeMap(dataForSecondRequest => this.httpClient.get('videos', {
+        params: new HttpParams()
+          .set('id', dataForSecondRequest)
+          .set('part', 'snippet,statistics'),
+      }))
+    ).subscribe((response: any) => {
       const searchData: SearchResponse < SearchItem > = response;
       this.items$.next(searchData.items);
       this.sortingService.items = searchData.items;
-      const data: SearchItem [] = searchData.items;
+      const data: SearchItem[] = searchData.items;
       this.store.dispatch(addSearchItems({data}));
       this.cacheItems[dataForSearch] = searchData.items;
       localStorage.setItem('youtube-app-cache-items', JSON.stringify(this.cacheItems));
