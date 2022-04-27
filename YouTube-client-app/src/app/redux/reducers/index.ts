@@ -7,10 +7,11 @@ import {
 } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
-import { CreatorState, creatorReducer } from '../actions/creator';
+import { creatorReducer } from '../actions/creator';
+import { CreatorStateModel } from '../state.models';
 
 export interface State {
-  creator: CreatorState,
+  creator: CreatorStateModel,
 }
 
 export const reducers: ActionReducerMap<State> = {

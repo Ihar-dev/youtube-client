@@ -2,6 +2,7 @@ import { state } from "@angular/animations";
 import { createAction, createReducer, on, props } from "@ngrx/store";
 
 import { SearchItem } from '../../youtube/models/search-item.model';
+import { CreatorStateModel } from '../state.models';
 
 const addCustomCard = createAction(
   '[Creator] Add card',
@@ -13,12 +14,7 @@ const addSearchItems = createAction(
   props<{data: SearchItem []}>(),
 );
 
-interface CreatorState {
-  customCards: SearchItem [],
-  searchItems: SearchItem [],
-}
-
-const initialState: CreatorState = {
+const initialState: CreatorStateModel = {
   customCards: [],
   searchItems: [],
 };
@@ -31,8 +27,8 @@ const creatorReducer = createReducer(
   })),
   on(addSearchItems, (state, {data}) => ({
     ...state,
-    searchItems: [...JSON.parse(JSON.stringify(data))],
+    searchItems: data,
   })),
 );
 
-export { addCustomCard, addSearchItems, CreatorState, initialState, creatorReducer };
+export { addCustomCard, addSearchItems, initialState, creatorReducer };
