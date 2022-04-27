@@ -1,0 +1,10 @@
+<app-header (headerToggleEvent)="toggleSortingBar($event)" (outDataForSearchEvent)="makeSearch($event)"></app-header>
+<app-sorting-bar [SortingBarView]="SortingBarView" (outSortingByViewsEvent)="makeSortingByViews($event)"
+(outSortingByPublishedAtEvent)="makeSortingByPublishedAt($event)"
+(outFilterSentenceEvent)="makeFilterBySentence($event)">
+</app-sorting-bar>
+<app-search-results [dataForSearch]="dataForSearch" [SortingBarView]="SortingBarView"
+[viewsSortingOrder]="viewsSortingOrder" [publishedAtSortingOrder]="publishedAtSortingOrder"
+[filterSentence]="filterSentence">
+</app-search-results>
+<router-outlet></router-outlet>
