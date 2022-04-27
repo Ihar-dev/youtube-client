@@ -7,7 +7,7 @@ import {
 } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
-import { creatorReducer } from '../actions/creator';
+import { creatorReducer } from './creator.reducer';
 import { CreatorStateModel } from '../state.models';
 
 export interface State {

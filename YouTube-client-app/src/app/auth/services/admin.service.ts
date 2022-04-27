@@ -7,7 +7,7 @@ import {
 
 import {
   addCustomCard
-} from '../../redux/actions/creator';
+} from '../../redux/actions/creator.actions';
 import {
   SearchItem
 } from '../../youtube/models/search-item.model';
@@ -26,7 +26,8 @@ export class AdminService {
     item.snippet.thumbnails.medium.url = userImg;
     item.snippet.thumbnails.maxres.url = userImg;
     item.snippet.publishedAt = userDate;
-    item.id = userVideo;
+    item.id = 'custom';
+    item.etag = userVideo;
     this.store.dispatch(addCustomCard(item));
   }
 

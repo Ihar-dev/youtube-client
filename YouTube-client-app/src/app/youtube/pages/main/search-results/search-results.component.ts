@@ -1,13 +1,14 @@
-import {
-  Component, OnInit, OnDestroy,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription, Subject, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { SortingService } from '../../../services/sorting.service';
 import { SearchingService } from '../../../services/searching.service';
 import { HeaderBarService } from '../../../../core/services/header-bar.service';
 import { SearchItem } from '../../../models/search-item.model';
 import { HeaderBarModel } from '../../../../core/models/header-bar.model';
+import { selectItemsState } from '../../../../redux/selectors/creator.selectors';
+import { CreatorStateModel } from '../../../../redux/state.models';
 
 @Component({
   selector: 'app-search-results',
@@ -24,18 +25,24 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private publishedAtSortingOrderSubs: Subscription;
   private filterSentenceSubs: Subscription;
   public items: SearchItem[];
+  private readonly store: Store;
+  private cards$: Observable < CreatorStateModel >;
+  private cardsSubs: Subscription;
 
-  constructor(headerBarService: HeaderBarService, sortingService: SortingService, searchingService: SearchingService) {
+  constructor(headerBarService: HeaderBarService, sortingService: SortingService, searchingService: SearchingService, store: Store) {
+    this.store = store;
     this.sortingService = sortingService;
     this.searchingService = searchingService;
     this.headerBarService = headerBarService;
     this.headerBarConditions = headerBarService.headerBarConditions;
+    this.cards$ = store.select(selectItemsState);
   }
 
   ngOnInit(): void {
-    this.items = this.sortingService.items;
-    this.itemsSubs = this.searchingService.items$.subscribe(async (items): Promise < void > => {
-      this.items = items;
+
+    this.cardsSubs = this.cards$.subscribe((data: CreatorStateModel): void => {
+      this.items = [...data.customCards, ...data.searchItems],
+      console.log(this.items);
     });
 
     this.viewsSortingOrderSubs = this.headerBarService.viewsSortingOrder$.subscribe((viewsSortingOrder): void => {
@@ -55,9 +62,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.itemsSubs.unsubscribe();
     this.viewsSortingOrderSubs.unsubscribe();
     this.publishedAtSortingOrderSubs.unsubscribe();
     this.filterSentenceSubs.unsubscribe();
+    this.cardsSubs.unsubscribe();
   }
 }

@@ -59,7 +59,7 @@ export class AdminPageComponent implements OnInit {
   private inputDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dateNow = new Date();
     const inputDate = new Date(control.value);
-    if (dateNow.getUTCDate() >= inputDate.getUTCDate()) return { forbiddenDate: true };
+    if (dateNow.getUTCDate() < inputDate.getUTCDate()) return { forbiddenDate: true };
     return null;
   }
 
@@ -79,10 +79,8 @@ export class AdminPageComponent implements OnInit {
     userDate: string,
     isUserDateInvalid: boolean,
   ): void {
-    this.adminService.addNewCard(userTitle, userDescription, userImg, userVideo, userDate);
     if (isUserTitleInvalid || isUserDescriptionInvalid || isUserImgInvalid || isUserVideoInvalid || isUserDateInvalid) return;
-    console.log(`submitting: title- ${userTitle}, description- ${userDescription}, img- ${userImg}
-    , video- ${userVideo}, date- ${userDate}`);
+    this.adminService.addNewCard(userTitle, userDescription, userImg, userVideo, userDate);
     this.router.navigate(['/main']);
   }
 }

@@ -9,7 +9,7 @@ import {
 
 import {
   addSearchItems
-} from '../../redux/actions/creator';
+} from '../../redux/actions/creator.actions';
 
 import { SortingService } from './sorting.service';
 
