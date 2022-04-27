@@ -28,7 +28,7 @@ export class AdminService {
     item.snippet.publishedAt = userDate;
     item.id = userVideo;
 
-    this.store.dispatch(addCard());
+    this.store.dispatch(addCard(item));
   }
 
   private getDefaultItem(): SearchItem {
