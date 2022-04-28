@@ -26,7 +26,7 @@ export class SearchingService {
   private cacheItems: {
     [key: string]: SearchItem[],
   };
-  private keyInput$ = new Subject < string > ();
+  private keyInput$ = new Subject < string >();
 
   constructor(sortingService: SortingService, private httpClient: HttpClient, store: Store) {
     this.sortingService = sortingService;
@@ -63,20 +63,20 @@ export class SearchingService {
           const searchData: SearchResponse < PreliminarySearchItem > = response;
           let dataForSecondRequest = '';
           searchData.items.forEach((el, index) => {
-            (index) ? dataForSecondRequest += `,${el.id.videoId}`: dataForSecondRequest += el.id.videoId;
+            (index) ? dataForSecondRequest += `,${el.id.videoId}` : dataForSecondRequest += el.id.videoId;
           });
           return dataForSecondRequest;
-        }
+        },
       ),
       mergeMap(dataForSecondRequest => this.httpClient.get('videos', {
         params: new HttpParams()
           .set('id', dataForSecondRequest)
           .set('part', 'snippet,statistics'),
-      }))
+      })),
     ).subscribe((response: any) => {
       const searchData: SearchResponse < SearchItem > = response;
       const data: SearchItem[] = searchData.items;
-      this.store.dispatch(addSearchItems({data}));
+      this.store.dispatch(addSearchItems({ data }));
       this.cacheItems[dataForSearch] = searchData.items;
       localStorage.setItem('youtube-app-cache-items', JSON.stringify(this.cacheItems));
       this.tempItems();

@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Subject, Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { SortingService } from '../../../services/sorting.service';
-import { SearchingService } from '../../../services/searching.service';
 import { HeaderBarService } from '../../../../core/services/header-bar.service';
 import { SearchItem } from '../../../models/search-item.model';
 import { HeaderBarModel } from '../../../../core/models/header-bar.model';
@@ -17,31 +16,29 @@ import { CreatorStateModel } from '../../../../redux/state.models';
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
   private readonly sortingService: SortingService;
-  private readonly searchingService: SearchingService;
   private readonly headerBarService: HeaderBarService;
   public headerBarConditions: HeaderBarModel;
-  private itemsSubs: Subscription;
   private viewsSortingOrderSubs: Subscription;
   private publishedAtSortingOrderSubs: Subscription;
   private filterSentenceSubs: Subscription;
   public items: SearchItem[];
-  private store: Store;
   private cards$: Observable < CreatorStateModel >;
   private cardsSubs: Subscription;
 
-  constructor(headerBarService: HeaderBarService, sortingService: SortingService, searchingService: SearchingService, store: Store) {
-    this.store = store;
+  constructor(
+    headerBarService: HeaderBarService,
+    sortingService: SortingService,
+    store: Store,
+  ) {
     this.sortingService = sortingService;
-    this.searchingService = searchingService;
     this.headerBarService = headerBarService;
     this.headerBarConditions = headerBarService.headerBarConditions;
     this.cards$ = store.select(selectItemsState);
   }
 
   ngOnInit(): void {
-
     this.cardsSubs = this.cards$.subscribe((data: CreatorStateModel): void => {
-      this.items = [...data.customCards, ...data.searchItems],
+      this.items = [...data.customCards, ...data.searchItems];
       this.sortingService.items = this.items;
       console.log(this.items);
     });

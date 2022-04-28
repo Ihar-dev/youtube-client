@@ -1,4 +1,4 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
 import { SearchItem } from '../../youtube/models/search-item.model';
 
@@ -9,7 +9,7 @@ const addCustomCard = createAction(
 
 const addSearchItems = createAction(
   '[Creator] Add search cards',
-  props<{data: SearchItem []}>(),
+  props<{ data: SearchItem [] }>(),
 );
 
 export { addCustomCard, addSearchItems };

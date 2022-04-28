@@ -1,26 +1,25 @@
 import {
-  Injectable
+  Injectable,
 } from '@angular/core';
 import {
-  Store
+  Store,
 } from '@ngrx/store';
 
 import {
-  addCustomCard
+  addCustomCard,
 } from '../../redux/actions/creator.actions';
 import {
-  SearchItem
+  SearchItem,
 } from '../../youtube/models/search-item.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
-
   constructor(private store: Store) {}
 
   public addNewCard(userTitle: string, userDescription: string, userImg: string, userVideo: string, userDate: string): void {
-    let item: SearchItem = this.getDefaultItem();
+    const item: SearchItem = this.getDefaultItem();
     item.snippet.title = userTitle;
     item.snippet.description = userDescription;
     item.snippet.thumbnails.medium.url = userImg;
@@ -83,7 +82,7 @@ export class AdminService {
         likeCount: '0',
         favoriteCount: '0',
         commentCount: '0',
-      }
+      },
     };
   }
 }

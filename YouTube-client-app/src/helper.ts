@@ -1,6 +1,6 @@
 const getBody = (): HTMLElement | null => document.querySelector('body');
 const getElementByClassName = (className: string): HTMLElement | null => document.querySelector(`.${className}`);
-const getListOfElementsByClassName = async (className: string): Promise < NodeListOf < HTMLElement > | null > => document.querySelectorAll(`.${className}`);
+const getListOfElementsByClassName = async (className: string): Promise < NodeListOf < HTMLElement > | null > => document.querySelectorAll(`.${className}`);/* eslint-disable-line */
 const getElementById = (idName: string): HTMLElement | null => document.getElementById(idName);
 const setElementActive = async (element: HTMLElement): Promise < void > => element.classList.add('active');
 const addClassForElement = async (element: HTMLElement, className: string): Promise < void > => element.classList.add(className);/* eslint-disable-line */

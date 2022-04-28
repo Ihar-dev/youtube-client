@@ -3,10 +3,10 @@ import {
   createSelector,
 } from '@ngrx/store';
 import {
-  CreatorStateModel
+  CreatorStateModel,
 } from '../state.models';
 
-const selectCreatorState = createFeatureSelector < CreatorStateModel > ('creator');
+const selectCreatorState = createFeatureSelector < CreatorStateModel >('creator');
 const selectItemsState = createSelector(
   selectCreatorState,
   (state: CreatorStateModel) => state,

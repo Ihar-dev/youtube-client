@@ -1,4 +1,4 @@
-import { createReducer, on } from "@ngrx/store";
+import { createReducer, on } from '@ngrx/store';
 
 import { CreatorStateModel } from '../state.models';
 import { addCustomCard, addSearchItems } from '../actions/creator.actions';
@@ -14,7 +14,7 @@ const creatorReducer = createReducer(
     ...state,
     customCards: [...JSON.parse(JSON.stringify(state.customCards)), item],
   })),
-  on(addSearchItems, (state, {data}) => ({
+  on(addSearchItems, (state, { data }) => ({
     ...state,
     searchItems: data,
   })),
