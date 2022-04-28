@@ -1,6 +1,6 @@
 import {
   ActionReducerMap,
-  MetaReducer
+  MetaReducer,
 } from '@ngrx/store';
 
 import { environment } from '../../../environments/environment';
@@ -14,6 +14,5 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
   creator: creatorReducer,
 };
-
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
