@@ -1,3 +1,4 @@
+/* eslint-disable ngrx/on-function-explicit-return-type */
 import { createReducer, on } from '@ngrx/store';
 
 import { CreatorStateModel } from '../state.models';
