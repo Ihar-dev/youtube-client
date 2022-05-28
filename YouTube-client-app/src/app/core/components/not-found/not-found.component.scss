@@ -1,0 +1,12 @@
+@import "../../../../styles.scss";
+
+:host {
+  height: 75%;
+  @extend %flex-center-pattern;
+
+  div {
+    width: 360px;
+    height: 100px;
+    @include background-image-block("../../../../assets/svg/not-found.svg", 100, 5px);
+  }
+}
